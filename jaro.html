@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Jaro Mobile Apps — Fachri All Khijaro</title>
+<meta name="description" content="How to increase the trust of mental health patients towards psychiatrists for more conservative treatment?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500&family=Inter:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+strong,b{font-weight:500}
+/* Headings: Ortica Light (self-hosted; add the files to assets/fonts/) */
+@font-face{font-family:"Ortica";font-weight:300;font-style:normal;font-display:swap;
+  src:url("assets/fonts/Ortica-Light.woff2") format("woff2"),url("assets/fonts/Ortica-Light.woff") format("woff")}
+
+/* Layout: editorial case study — short hero with mockup, then sticky "On this page" + one reading column */
+:root{
+  --radius:10px; --radius-sm:6px;
+  --bg:#ffffff;
+  --text:#111111;
+  --muted:#5f5f5f;
+  --line:#ebebeb;
+  --primary:#111111;
+  --primary-soft:#f2f2f2;
+  --surface-2:#f6f6f6;
+  --glass:#ffffff;
+  --glass-strong:#ffffff;
+  --glass-border:#ebebeb;
+  --glass-ring:transparent;
+  --shadow:0 1px 2px rgba(0,0,0,.04);
+  --ph-strong:#f1f1f1;
+  --sans:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;   /* paragraphs: Inter Light */
+  --heading:"Ortica", "Instrument Serif", Georgia, serif;           /* headings: Ortica Light */
+  --sub:"Fustat", "Inter", system-ui, sans-serif;                    /* sub-headings: Fustat Regular */
+  --max:1160px;
+  --gutter:24px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{background:var(--bg);color:var(--text);font:300 17px/1.75 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block;height:auto}
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* closed-shape icons get the same soft tint as the active navbar icon */
+svg.i.i--duo{fill:currentColor;fill-opacity:.12}
+/* CTA icons: each one names its action; on hover they tilt like the navbar memoji */
+svg.i.cta-ic{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+a:hover svg.i.cta-ic,a:focus-visible svg.i.cta-ic,.pcard:hover svg.i.cta-ic,.collage:hover svg.i.cta-ic{transform:rotate(-8deg) scale(1.1)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:var(--radius-sm)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+main{overflow-x:clip}
+.glass{background:var(--glass);
+  border:1px solid var(--glass-border);box-shadow:0 0 0 1px var(--glass-ring), var(--shadow)}
+
+/* image placeholder (swap for the Notion screenshots) */
+.ph{position:relative;display:grid;place-items:center;overflow:hidden;border-radius:var(--radius);color:var(--muted);font-size:13px;font-weight:400;
+  background:var(--ph-strong);
+  box-shadow:0 0 0 1px var(--glass-ring)}
+.ph span{padding:6px 12px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--glass-border);text-align:center}
+
+.reveal{opacity:0;transform:translateY(16px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .7s var(--ease), transform .7s var(--ease)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font:400 16px/1 var(--sans);white-space:nowrap;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn--dark{background:var(--text);color:#fff}
+.btn--dark:hover{background:#2b2b2b}
+.btn--line{border:1px solid #d6d6d6;color:var(--text)}
+.btn--line:hover{border-color:#111}
+.btn .i{transition:transform .25s var(--ease)}
+.btn:hover .i.out{transform:translate(2px,-2px)}
+.btn:hover .i.down{transform:translateY(2px)}
+.btn:hover .i.back{transform:translateX(-3px)}
+
+/* ---------- floating nav (same as homepage) ---------- */
+.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;padding:6px;border-radius:999px;max-width:calc(100% - 24px);
+  background:#fff}
+.nav__links{display:flex;gap:4px;list-style:none}
+.nav__links a{position:relative;display:flex;align-items:center;height:44px;padding:0 12px;border-radius:999px;font-size:15px;font-weight:500;white-space:nowrap;color:var(--muted);transition:color .25s, background-color .25s}
+.nav__links a svg.i{width:20px;height:20px}
+.nav__links a:hover{color:var(--text);background:var(--primary-soft)}
+.nav__links a.active{color:var(--primary);background:var(--primary-soft)}
+.nav__label{display:block;max-width:0;opacity:0;overflow:hidden}
+.nav__links a.active .nav__label{max-width:160px;opacity:1;margin-left:8px}
+.nav__links a:not(.active)::after{content:attr(data-tip);position:absolute;left:50%;top:calc(100% + 10px);transform:translate(-50%,-4px);padding:6px 10px;border-radius:var(--radius-sm);
+  font-size:13px;font-weight:500;white-space:nowrap;color:var(--text);background:var(--glass-strong);box-shadow:0 0 0 1px var(--glass-ring), var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s, transform .2s var(--ease)}
+.nav__links a:not(.active):hover::after,.nav__links a:not(.active):focus-visible::after{opacity:1;transform:translate(-50%,0)}
+.nav__links a.nav__home{padding:0 4px;background:none}
+.avatar-logo{display:block;width:36px;height:36px;border-radius:50%;
+  background:url(assets/character.png) 47% 13%/300% auto no-repeat, #f0f0f0;box-shadow:0 0 0 1px var(--glass-ring);transition:transform .25s var(--ease)}
+.nav__home:hover .avatar-logo{transform:scale(1.06)}
+.nav__cta{display:inline-flex;align-items:center;gap:6px;height:44px;margin-left:6px;padding:0 16px;border-radius:999px;font-size:15px;font-weight:500;white-space:nowrap;color:#fff;
+  background:var(--primary);transition:transform .25s var(--ease), background-color .25s}
+.nav__cta:hover{transform:translateY(-1px);background:#2b2b2b}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center;padding:128px 0 72px}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;font:400 14px/1.4 var(--sub);color:var(--muted);margin-bottom:28px}
+.crumbs a{display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.crumbs a:hover{color:var(--primary)}
+.crumbs li:not(:last-child)::after{content:"/";margin-left:8px;opacity:.4}
+.crumbs [aria-current]{color:var(--text)}
+.hero h1{margin-top:0;font:300 clamp(42px,5.6vw,72px)/1.04 var(--heading);letter-spacing:-.015em;text-wrap:balance}
+.lead{margin-top:24px;max-width:600px;font-size:19px;line-height:1.7;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:20px 48px;margin-top:40px}
+.meta dt{font:400 12px/1 var(--sub);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.meta dd{font:400 18px/1.3 var(--sans);color:var(--text)}
+/* browser mockup on the right */
+.browser{border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--line), 0 30px 60px -36px rgba(0,0,0,.25);transform:rotate(1.5deg)}
+.browser__bar{display:flex;align-items:center;gap:6px;height:38px;padding:0 14px;background:#f6f6f6;border-bottom:1px solid var(--line)}
+.browser__bar i{width:9px;height:9px;border-radius:50%;background:#d5dbe7}
+.browser__bar span{margin-left:12px;padding:3px 12px;border-radius:999px;background:#fff;font-size:12px;color:var(--muted)}
+.browser .ph{border-radius:0;box-shadow:none;aspect-ratio:4/5}
+
+/* ---------- body ---------- */
+.case{display:grid;grid-template-columns:200px minmax(0,1fr);gap:72px;padding:24px 0 40px;border-top:1px solid var(--line)}
+.toc{position:sticky;top:110px;align-self:start;padding-top:72px}
+.toc p{font:400 12px/1 var(--sub);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.toc ol{list-style:none;border-left:1px solid var(--line)}
+.toc a{display:block;padding:8px 0 8px 20px;margin-left:-1px;border-left:2px solid transparent;font-size:15px;color:var(--muted);transition:color .2s, border-color .2s}
+.toc a:hover{color:var(--text)}
+.toc a.active{color:var(--text);border-left-color:var(--primary);font-weight:400}
+.content{min-width:0;max-width:800px}
+.sec{padding-top:72px}
+.kicker{font:400 14px/1 var(--sub);letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:16px}
+.sec h2{font:300 clamp(32px,4vw,48px)/1.1 var(--heading);letter-spacing:-.01em;text-wrap:balance}
+.sec > p,.para{margin-top:20px;color:var(--muted)}
+.sec p strong,.para strong{color:var(--text)}
+.quote{margin:36px 0 8px;padding:28px 32px;border-left:2px solid var(--primary);border-radius:0 var(--radius) var(--radius) 0;background:#f7f7f7;font:300 clamp(24px,2.6vw,30px)/1.35 var(--heading);color:var(--text)}
+.quote small{display:block;margin-top:10px;font:400 13px/1 var(--sub);letter-spacing:.12em;text-transform:uppercase;font-style:normal;color:var(--muted)}
+.h3{font:400 22px/1.3 var(--sub);color:var(--text)}
+
+/* numbered items (big serif numerals) */
+.steps{list-style:none;display:grid;gap:36px;margin-top:40px}
+.step{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px}
+.step__n{font:300 44px/1 var(--heading);color:var(--primary)}
+.step p{margin-top:8px;color:var(--muted)}
+.steps--sm{gap:24px}
+.steps--sm .step{grid-template-columns:56px minmax(0,1fr)}
+.steps--sm .step__n{font-size:34px}
+
+/* Notion-like toggles */
+.toggle{margin-top:14px;border-top:1px solid var(--line)}
+.toggle + .toggle{margin-top:0}
+.toggle summary{display:flex;align-items:center;gap:10px;padding:12px 0;cursor:pointer;list-style:none;font:400 16px/1.3 var(--sub);color:var(--text)}
+.toggle summary::-webkit-details-marker{display:none}
+.toggle summary::before{content:"";width:0;height:0;border-left:6px solid currentColor;border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;transition:transform .25s var(--ease);opacity:.6}
+.toggle[open] summary::before{transform:rotate(90deg)}
+.toggle summary:hover{color:var(--primary)}
+.toggle ul{list-style:none;display:grid;gap:8px;padding:0 0 16px 18px}
+.toggle li{position:relative;padding-left:18px;color:var(--muted)}
+.toggle li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:#cfcfcf}
+.toggle.fix li::before{background:var(--primary)}
+.toggle li b{color:var(--text)}
+
+/* two-column text (no cards) */
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:36px;border-top:1px solid var(--line)}
+.cols > div{padding:28px 32px 4px 0}
+.cols > div + div{padding-left:32px;border-left:1px solid var(--line)}
+.dots{list-style:none;display:grid;gap:8px;margin-top:14px}
+.dots li{position:relative;padding-left:18px;color:var(--muted)}
+.dots li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--primary)}
+.small-label{margin-top:16px;font:400 13px/1.5 var(--sub);color:var(--muted)}
+.small-label b{color:var(--text);font-weight:400}
+
+/* demographics table */
+.rows{margin-top:36px;border-top:1px solid var(--line)}
+.rows div{display:grid;grid-template-columns:160px minmax(0,1fr);gap:24px;padding:16px 0;border-bottom:1px solid var(--line)}
+.rows dt{font:400 15px/1.6 var(--sub);color:var(--text)}
+.rows dd{color:var(--muted)}
+.sub-h{margin-top:56px}
+
+/* design pages */
+.page{margin-top:64px}
+.page__head{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}
+.page__head .h3{padding-top:2px}
+.page__head p{color:var(--muted)}
+.page__head p strong{color:var(--text)}
+.goal-line{display:flex;gap:10px;margin-top:12px;font-size:15px;color:var(--text)}
+.goal-line::before{content:"→";color:var(--primary)}
+.shots{display:grid;gap:14px;margin-top:24px}
+.shots .full{aspect-ratio:16/9}
+.shots .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.shots .pair .ph{aspect-ratio:4/3}
+.mock{margin-top:36px;aspect-ratio:16/9}
+
+/* outcomes */
+.checks{list-style:none;display:grid;gap:14px;margin-top:28px}
+.checks li{display:flex;gap:14px;align-items:flex-start;font:400 19px/1.5 var(--sub);color:var(--text)}
+.checks svg{width:24px;height:24px;flex:none;margin-top:2px;color:var(--primary)}
+
+/* end */
+.end{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;margin-top:96px;padding:40px 0;border-top:1px solid var(--line)}
+.end h2{font:300 clamp(28px,3vw,36px)/1.15 var(--heading)}
+.end .actions{display:flex;flex-wrap:wrap;gap:12px}
+.footer{margin-top:48px;padding:28px 0 48px;font-size:14px;background:#111111;color:#a3a3a3}
+
+@media (max-width:1100px){
+  .case{grid-template-columns:1fr;gap:0}
+  .toc{display:none}
+  .content{max-width:none}
+}
+@media (max-width:900px){
+  html{scroll-padding-top:24px}
+  .nav{top:auto;bottom:calc(14px + env(safe-area-inset-bottom, 0px));max-width:calc(100% - 20px)}
+  .nav__links{gap:0}
+  .nav__links a{height:46px;padding:0 8px;font-size:12px}
+  .nav__links a.active .nav__label{max-width:104px;margin-left:6px}
+  .nav__links a:not(.active)::after{top:auto;bottom:calc(100% + 10px)}
+  .avatar-logo{width:34px;height:34px}
+  .nav__cta{width:40px;height:40px;padding:0;justify-content:center;margin-left:2px}
+  .nav__cta-text{display:none}
+  .hero{grid-template-columns:1fr;gap:48px;padding-top:56px}
+  .browser{max-width:420px;transform:none}
+  .browser .ph{aspect-ratio:4/3}
+  .page__head{grid-template-columns:1fr;gap:8px}
+  .footer{padding-bottom:120px}
+}
+@media (max-width:640px){
+  :root{--gutter:16px}
+  body{font-size:16px}
+  .lead{font-size:17px}
+  .meta{gap:20px 32px}
+  .cols{grid-template-columns:1fr}
+  .cols > div{padding:24px 0 4px}
+  .cols > div + div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .rows div{grid-template-columns:1fr;gap:4px}
+  .step{grid-template-columns:52px minmax(0,1fr)}
+  .step__n{font-size:34px}
+  .shots .pair{grid-template-columns:1fr}
+  .btn{height:48px;padding:0 20px;font-size:15px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+}
+/* Furrr Fun additions */
+.cover-shot{border-radius:var(--radius);overflow:hidden;transform:rotate(-1.5deg);box-shadow:0 0 0 1px var(--line), 0 30px 60px -36px rgba(0,0,0,.25)}
+.cover-shot .ph{border-radius:0;box-shadow:none;aspect-ratio:4/5}
+.toggle-body{padding:0 0 22px 18px}
+.toggle-body > p{color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+.grid3 .ph{aspect-ratio:1/1}
+.shots .wide{aspect-ratio:16/9}
+.shots .tall{aspect-ratio:4/3}
+@media (max-width:900px){.cover-shot{max-width:420px;transform:none}.cover-shot .ph{aspect-ratio:4/3}}
+@media (max-width:640px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* real images */
+.shot{border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 1px var(--line);background:#f6f6f6}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.scrollshot-wrap{position:relative}
+.scrollshot{height:min(72vh,640px);overflow-y:auto;border-radius:var(--radius);box-shadow:0 0 0 1px var(--line);overscroll-behavior:contain;scrollbar-width:thin;background:#f6f6f6}
+.scrollshot img{display:block;width:100%;height:auto}
+.scrollshot-wrap::after{content:"Scroll ↓";position:absolute;right:12px;bottom:12px;padding:6px 10px;border-radius:999px;background:#111;color:#fff;font:400 12px/1 var(--sub);pointer-events:none}
+.banner{margin:0 0 8px;border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+.banner img{display:block;width:100%;aspect-ratio:5/2;object-fit:cover}
+.cover-shot img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.logo-grid{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+.logo-grid .stack{display:grid;gap:14px}
+.logo-grid .stack .shot{aspect-ratio:1/1}
+.logo-grid .stack .shot img{object-fit:contain;padding:12%}
+.grid3 .shot{aspect-ratio:4/5}
+.grid3.r32 .shot{aspect-ratio:3/2}
+.pack{display:grid;grid-template-columns:.8fr 1.5fr;gap:14px;align-items:start}
+.single{max-width:520px}
+@media (max-width:640px){.logo-grid,.pack{grid-template-columns:1fr}.logo-grid .stack{grid-template-columns:repeat(3,1fr)}}
+/* generic case content */
+.sec p{color:var(--muted)}
+.sec p + p,.sec .dots + p,.sec .nums + p{margin-top:14px}
+.sec h4{margin-top:28px;font:400 18px/1.35 var(--sub);color:var(--text)}
+.sec .sub-h + p{margin-top:10px}
+.sec .dots,.sec .nums{margin-top:14px}
+.nums{padding-left:22px;display:grid;gap:8px;color:var(--muted)}
+.nums li::marker{color:var(--text);font-weight:400}
+.dots .dots{margin-top:8px}
+.callout-box{margin-top:20px;padding:20px 22px;border-radius:var(--radius);background:#f7f7f7;color:var(--text)}
+.callout-box p{color:var(--text)}
+.pic{margin:20px 0 0}
+.pic img{width:100%;height:auto;border-radius:var(--radius);box-shadow:0 0 0 1px var(--line)}
+.pic .scrollshot img{border-radius:0;box-shadow:none}
+.pic figcaption{margin-top:8px;font-size:13px;color:var(--muted)}
+.cols-auto{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:16px;margin-top:8px;align-items:start}
+.cols-auto > div > :first-child{margin-top:12px}
+.video-link{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid #d6d6d6;color:var(--text);font:400 15px/1 var(--sub)}
+.video-link:hover{border-color:#111}
+.table-wrap{overflow-x:auto;margin-top:16px}
+.table-wrap table{border-collapse:collapse;width:100%;font-size:15px}
+.table-wrap td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+.table-wrap tr:first-child td{color:var(--text);font-family:var(--sub)}
+code{font-size:.9em;background:#f2f2f2;padding:1px 5px;border-radius:5px}
+@media (max-width:640px){.cols-auto{grid-template-columns:repeat(min(var(--n),2),minmax(0,1fr))}}
+
+/* ---------- Top nav: name + pill + Say Hello; pulls together on scroll ---------- */
+.topnav{position:fixed;top:16px;left:0;right:0;z-index:100;pointer-events:none}
+.topnav__in{pointer-events:auto;margin:0 auto;width:calc(100% - 48px);max-width:1180px;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:max-width .7s cubic-bezier(.2,.7,.2,1)}
+.topnav.compact .topnav__in{max-width:var(--cw,640px)}
+.brand{flex:none;display:inline-flex;align-items:center;height:52px;border-radius:999px;color:#111;font:400 19px/1 var(--sub);white-space:nowrap;transition:background-color .4s, box-shadow .4s}
+.brand__mark{display:grid;place-items:center;width:52px;height:52px;margin-right:-6px;font-size:18px;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.brand__mark img{width:40px;height:40px;object-fit:contain;mix-blend-mode:multiply}  /* memoji has a white ground */
+.brand:hover .brand__mark{transform:rotate(-8deg) scale(1.08)}
+@media (hover:hover){
+  /* hover: the name tucks away and only the memoji stays, like the compact state */
+  .brand:hover{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+  .brand:hover .brand__mark{margin-right:0}
+  .brand:hover .brand__name{max-width:0;opacity:0;padding-right:0}
+}
+.brand__name{display:block;max-width:220px;overflow:hidden;opacity:1;padding-right:10px;transition:max-width .6s cubic-bezier(.2,.7,.2,1), opacity .3s, padding .6s}
+.topnav.compact .brand{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+.topnav.compact .brand__mark{margin-right:0}
+.topnav.compact .brand__name{max-width:0;opacity:0;padding-right:0}
+.pill ul{display:flex;gap:2px;list-style:none;margin:0;padding:5px;border-radius:999px;background:#f3f3f3;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -18px rgba(0,0,0,.3)}
+.pill a{display:flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:999px;font:400 15px/1 var(--sub);color:#6b6b6b;white-space:nowrap;transition:color .2s, background-color .2s, box-shadow .2s}
+.pill a:hover{color:#111}
+.pill a.active{background:#fff;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.pill svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pill a.active svg{fill:currentColor;fill-opacity:.12}
+.sayhi{flex:none;display:inline-flex;align-items:center;height:52px;padding:0 22px 0 16px;border-radius:999px;background:#111;color:#fff;font:400 16px/1 var(--sub);white-space:nowrap;transition:padding .6s cubic-bezier(.2,.7,.2,1), background-color .2s}
+.sayhi:hover{background:#2b2b2b}
+.sayhi__hand{display:inline-block;font-size:20px;line-height:1;transform-origin:70% 80%;animation:handwave 2.2s ease-in-out infinite}
+.sayhi__text{display:block;max-width:110px;margin-left:8px;overflow:hidden;opacity:1;transition:max-width .6s cubic-bezier(.2,.7,.2,1), opacity .3s, margin .6s}
+.topnav.compact .sayhi{padding:0 15px}
+.topnav.compact .sayhi__text{max-width:0;opacity:0;margin-left:0}
+@keyframes handwave{0%,55%,100%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-8deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-4deg)}48%{transform:rotate(8deg)}}
+@media (max-width:900px){
+  .topnav{top:auto;bottom:calc(14px + env(safe-area-inset-bottom, 0px))}
+  .topnav__in{width:calc(100% - 20px);max-width:var(--cw,360px) !important;justify-content:center}
+  .brand{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+  .brand__mark{margin-right:0}
+  .brand__name,.sayhi__text{max-width:0;opacity:0;margin-left:0;padding-right:0}
+  .sayhi{padding:0 15px}
+  .pill a{padding:0 11px;font-size:13px}
+  .pill a span{display:none}
+  .pill a.active span{display:inline}
+}
+@media (prefers-reduced-motion: reduce){.sayhi__hand{animation:none}}
+</style>
+<link rel="stylesheet" href="assets/motion.css">
+</head>
+<body>
+
+<!-- ================= FLOATING NAV ================= -->
+<header class="topnav" id="nav">
+  <div class="topnav__in">
+    <a class="brand" href="index.html" aria-label="Fachryall, home"><span class="brand__mark" aria-hidden="true"><img src="assets/memoji.png" width="256" height="256" alt=""></span><span class="brand__name">Fachryall</span></a>
+    <nav class="pill" aria-label="Main"><ul><li><a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Come In</span></a></li><li><a href="meet-me.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5v.01M15 9.5v.01"/></svg><span>Meet Me</span></a></li><li><a href="work.html" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span>My Lab</span></a></li></ul></nav>
+    <a class="sayhi" href="https://www.linkedin.com/in/fachriallkhijaro/" target="_blank" rel="noopener" aria-label="Say hello on LinkedIn"><span class="sayhi__hand" aria-hidden="true">👋</span><span class="sayhi__text">Say Hello</span></a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<header class="hero" style="grid-template-columns:1fr">
+  <div>
+    <nav aria-label="Breadcrumb">
+      <ol class="crumbs">
+        <li><a href="work.html">My Lab</a></li>
+        <li><a href="work.html#uiux">UI/UX Design</a></li>
+        <li><span aria-current="page">Jaro Mobile Apps</span></li>
+      </ol>
+    </nav>
+    <h1>Jaro Mobile Apps</h1>
+    <p class="lead">How to increase the trust of mental health patients towards psychiatrists for more conservative treatment?</p>
+    <dl class="meta">
+      <div><dt>Type</dt><dd>Challenge</dd></div>
+      <div><dt>Role</dt><dd>UI/UX · Usability Testing</dd></div>
+      <div><dt>Industry</dt><dd>Healthcare</dd></div>
+      <div><dt>Year</dt><dd>2021</dd></div>
+      <div><dt>Tools</dt><dd>Figma · Illustrator · Photoshop</dd></div>
+    </dl>
+  </div>
+</header>
+
+<figure class="banner reveal"><img src="assets/work/jaro/cover.jpg" width="1400" height="560" alt="Jaro Mobile Apps cover"></figure>
+
+<div class="case">
+  <aside class="toc" aria-label="On this page">
+    <p>On this page</p>
+    <ol id="toc"><li><a href="#s1">Project Overview</a></li><li><a href="#s2">Research Plan</a></li><li><a href="#s3">User Persona</a></li><li><a href="#s4">User Journey Map</a></li><li><a href="#s5">Wireframe</a></li><li><a href="#s6">Design System</a></li><li><a href="#s7">Hi-Fi</a></li></ol>
+  </aside>
+
+  <article class="content">
+    <section class="sec reveal" id="s1">
+      <p class="kicker">01</p>
+      <h2>Project Overview</h2>
+      <figure class="pic"><img src="assets/work/jaro/01.png" width="242" height="124" alt="Jaro Mobile Apps" loading="lazy" decoding="async"></figure><p>JARO was initiated due to the increasing number of people experiencing mental health problems and the difficulty in overcoming them. Many people affected by mental health issues feel ashamed to talk about their problems. Additionally, economic factors and laziness to visit doctors/psychiatrists, among other issues, make it difficult to address these problems. From there, we had the idea of creating JARO, and we thought about how we could help solve mental health problems efficiently and effectively.</p>
+    </section>
+    <section class="sec reveal" id="s2">
+      <p class="kicker">02</p>
+      <h2>Research Plan</h2>
+      <h3 class="h3 sub-h">Project brief</h3><p>How to increase the trust of mental health patients towards psychiatrists for more conservative treatment?</p><h3 class="h3 sub-h">Background</h3><ul class="dots"><li>Looking at the increasing number of people with mental health issues in Indonesia, which starts from a young age.</li><li>Realizing that society is less open in expressing the cases/problems they are facing.</li><li>There is a lack of interest among people to visit a psychiatrist for face-to-face consultation.</li><li>Feeling ashamed of the stigma that often occurs in the surrounding environment, so often closing oneself off from the environment.</li><li>Based on several insights gained, we want to create a safe space based on a supportive system in the form of a digital media, namely an app for individuals with mental health conditions.</li></ul><h3 class="h3 sub-h">Objectives</h3><details class="toggle"><summary>Research objectives</summary><div class="toggle-body"><div class="callout-box">The objectives here are focused on users and their needs and desires.</div><ul class="dots"><li>We aim to provide accessible rehabilitation, psychotherapy, education, and advocacy services that they require.</li><li>We want users to achieve restored mental health so that they can be said to have undergone treatment.</li></ul></div></details><details class="toggle"><summary>Business objectives</summary><div class="toggle-body"><div class="callout-box">The objectives here focus on the business goals.</div><ul class="dots"><li>Users create an account and register for consultation/treatment.</li><li>Evaluating user satisfaction.</li></ul></div></details><details class="toggle"><summary>Research success criteria</summary><div class="toggle-body"><div class="callout-box">Enter the criteria of insights and data that are known to define a successful research.</div><p>Successfully generating ideas and solutions to enhance user trust in psychiatrists as experts in addressing their mental health issues.</p></div></details><details class="toggle"><summary>What the deliverables</summary><div class="toggle-body"><div class="callout-box">Specify the research artifacts that will be provided upon the completion of the research.</div><ul class="dots"><li>User persona</li><li>Affinity diagram</li><li>User journey map</li><li>Inight report</li></ul></div></details><h3 class="h3 sub-h">Hypothesis</h3><p><strong>Assumptions</strong></p><div class="callout-box">Please input any existing assumptions as initial data for validation.</div><ul class="dots"><li>When someone experiences mental health issues, they require a platform for consultation with experts.</li></ul><h3 class="h3 sub-h">Methods</h3><details class="toggle"><summary>Quantitative methods</summary><div class="toggle-body"><ul class="dots"><li>Contextual inquiries with 2 individuals</li></ul></div></details><details class="toggle"><summary>Qualitative methods</summary><div class="toggle-body"><ul class="dots"><li>Interviews with 2 individuals</li><li>Non-user</li><li>Female</li></ul></div></details><h3 class="h3 sub-h">Participant</h3><p><strong>Define the target audience</strong></p><div class="callout-box">Please define the target audience, including potential sources and participants for qualitative methods.</div><ul class="dots"><li>Digital native: smartphone and laptop users</li><li>Age: 14-35 years old</li><li>Urban people</li></ul><h3 class="h3 sub-h">Timeline</h3><div class="table-wrap"><table><tr><td><strong>Recruiting Participant</strong></td><td>3 days</td><td>24 - 26 September 2021</td></tr><tr><td><strong>Research + Analysis</strong></td><td>5 days</td><td>27 September - 1 October 2021</td></tr><tr><td><strong>Final Delivery</strong></td><td>1 day</td><td>2 October 2021</td></tr></table></div>
+    </section>
+    <section class="sec reveal" id="s3">
+      <p class="kicker">03</p>
+      <h2>User Persona</h2>
+      <p>After conducting interviews with 2 participants, we were able to summarize and create one user persona to proceed to the next stage.</p><figure class="pic"><img src="assets/work/jaro/02.jpg" width="1400" height="1252" alt="Jaro Mobile Apps" loading="lazy" decoding="async"></figure>
+    </section>
+    <section class="sec reveal" id="s4">
+      <p class="kicker">04</p>
+      <h2>User Journey Map</h2>
+      <p>The next step involves creating a user journey map to identify pain points, opportunities fo improvement, and areas where the user’s experience can be enhanced. By understanding the user’s journey, we can design more intuitive and user-friendly products and services that meet their needs and expectations.</p><figure class="pic"><img src="assets/work/jaro/03.png" width="1400" height="1793" alt="Jaro Mobile Apps" loading="lazy" decoding="async"></figure>
+    </section>
+    <section class="sec reveal" id="s5">
+      <p class="kicker">05</p>
+      <h2>Wireframe</h2>
+      <p>Befode designing the final look with colors and interactions, it’s important to create a wireframe. It’s a cost-effective and time-efficient way to get a bassic idea of how our application will appear. Additionally, if any changes are needed, we can easily modify the wireframe without much time investment.</p><figure class="pic"><img src="assets/work/jaro/04.png" width="1226" height="1232" alt="Jaro Mobile Apps" loading="lazy" decoding="async"></figure>
+    </section>
+    <section class="sec reveal" id="s6">
+      <p class="kicker">06</p>
+      <h2>Design System</h2>
+      <p>Before diving into the deeper design stage, we create a design system to assist in guiding our design process. This ensures consistency and uniformity throughout our designs by ensuring the accuracy of font sizes, colors, buttons, icons, photo styles, and components.<br><br>This helps us maintain our design in the future.</p><figure class="pic"><img src="assets/work/jaro/05.jpg" width="1400" height="1147" alt="Logo" loading="lazy" decoding="async"><figcaption>Logo</figcaption></figure><figure class="pic"><img src="assets/work/jaro/06.jpg" width="1008" height="1324" alt="Color Palette" loading="lazy" decoding="async"><figcaption>Color Palette</figcaption></figure><figure class="pic"><img src="assets/work/jaro/07.jpg" width="606" height="866" alt="Buttons" loading="lazy" decoding="async"><figcaption>Buttons</figcaption></figure><figure class="pic"><img src="assets/work/jaro/08.jpg" width="1400" height="1366" alt="Image Styles" loading="lazy" decoding="async"><figcaption>Image Styles</figcaption></figure><figure class="pic"><img src="assets/work/jaro/09.jpg" width="544" height="754" alt="Icon Style" loading="lazy" decoding="async"><figcaption>Icon Style</figcaption></figure><figure class="pic"><img src="assets/work/jaro/10.png" width="1165" height="185" alt="Typography Style" loading="lazy" decoding="async"><figcaption>Typography Style</figcaption></figure><figure class="pic"><img src="assets/work/jaro/11.jpg" width="1400" height="2091" alt="Components" loading="lazy" decoding="async"><figcaption>Components</figcaption></figure>
+    </section>
+    <section class="sec reveal" id="s7">
+      <p class="kicker">07</p>
+      <h2>Hi-Fi</h2>
+      <p>The objective at this stage is to implement the design system into the created wireframe, with improvements and adjustments that adhere to the established design system to maintain consistency.</p><figure class="pic"><img src="assets/work/jaro/12.png" width="1120" height="1166" alt="High-Fidelity" loading="lazy" decoding="async"><figcaption>High-Fidelity</figcaption></figure><figure class="pic"><img src="assets/work/jaro/13.jpg" width="1400" height="933" alt="Jaro Mobile Apps" loading="lazy" decoding="async"></figure><figure class="pic"><img src="assets/work/jaro/14.jpg" width="1400" height="933" alt="Jaro Mobile Apps" loading="lazy" decoding="async"></figure><figure class="pic"><img src="assets/work/jaro/15.jpg" width="1080" height="720" alt="Jaro Mobile Apps" loading="lazy" decoding="async"></figure>
+    </section>
+
+    <div class="end reveal">
+      <h2>More things I’ve made.</h2>
+      <div class="actions">
+        <a class="btn btn--line" href="work.html"><svg class="i i--duo cta-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>All work</a>
+        <a class="btn btn--dark" href="https://www.linkedin.com/in/fachriallkhijaro/" target="_blank" rel="noopener">Say Hi 💬</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>©<span id="yr">2026</span> Fachri All Khijaro · All works are not to be used without written permission.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll reveal */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* "On this page": highlight the section being read */
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function spy() {
+    var mid = innerHeight * 0.35, hit = 0;
+    targets.forEach(function (t, i) { if (t.getBoundingClientRect().top <= mid) hit = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === hit); });
+  }
+  addEventListener('scroll', spy, { passive: true });
+  spy();
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+<script>
+/* top nav: logo + Say Hello slide in next to the pill once you scroll */
+(function () {
+  var n = document.getElementById('nav'); if (!n || !n.classList.contains('topnav')) return;
+  var pill = n.querySelector('.pill ul');
+  function fit() { n.style.setProperty('--cw', (pill.offsetWidth + 2 * 52 + 16) + 'px'); }
+  function on() { n.classList.toggle('compact', scrollY > 40); }
+  fit(); on();
+  addEventListener('scroll', on, { passive: true });
+  addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="assets/motion.js"></script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Cekat.AI Website — Fachri All Khijaro</title>
+<meta name="description" content="Case study: revamping the Cekat.AI website so businesses understand AI customer service faster and try it sooner.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500&family=Inter:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+strong,b{font-weight:500}
+/* Headings: Ortica Light (self-hosted; add the files to assets/fonts/) */
+@font-face{font-family:"Ortica";font-weight:300;font-style:normal;font-display:swap;
+  src:url("assets/fonts/Ortica-Light.woff2") format("woff2"),url("assets/fonts/Ortica-Light.woff") format("woff")}
+
+/* Layout: editorial case study — short hero with mockup, then sticky "On this page" + one reading column */
+:root{
+  --radius:10px; --radius-sm:6px;
+  --bg:#ffffff;
+  --text:#111111;
+  --muted:#5f5f5f;
+  --line:#ebebeb;
+  --primary:#111111;
+  --primary-soft:#f2f2f2;
+  --surface-2:#f6f6f6;
+  --glass:#ffffff;
+  --glass-strong:#ffffff;
+  --glass-border:#ebebeb;
+  --glass-ring:transparent;
+  --shadow:0 1px 2px rgba(0,0,0,.04);
+  --ph-strong:#f1f1f1;
+  --sans:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;   /* paragraphs: Inter Light */
+  --heading:"Ortica", "Instrument Serif", Georgia, serif;           /* headings: Ortica Light */
+  --sub:"Fustat", "Inter", system-ui, sans-serif;                    /* sub-headings: Fustat Regular */
+  --max:1160px;
+  --gutter:24px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{background:var(--bg);color:var(--text);font:300 17px/1.75 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block;height:auto}
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* closed-shape icons get the same soft tint as the active navbar icon */
+svg.i.i--duo{fill:currentColor;fill-opacity:.12}
+/* CTA icons: each one names its action; on hover they tilt like the navbar memoji */
+svg.i.cta-ic{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+a:hover svg.i.cta-ic,a:focus-visible svg.i.cta-ic,.pcard:hover svg.i.cta-ic,.collage:hover svg.i.cta-ic{transform:rotate(-8deg) scale(1.1)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:var(--radius-sm)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+main{overflow-x:clip}
+.glass{background:var(--glass);
+  border:1px solid var(--glass-border);box-shadow:0 0 0 1px var(--glass-ring), var(--shadow)}
+
+/* image placeholder (swap for the Notion screenshots) */
+.ph{position:relative;display:grid;place-items:center;overflow:hidden;border-radius:var(--radius);color:var(--muted);font-size:13px;font-weight:400;
+  background:var(--ph-strong);
+  box-shadow:0 0 0 1px var(--glass-ring)}
+.ph span{padding:6px 12px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--glass-border);text-align:center}
+
+.reveal{opacity:0;transform:translateY(16px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .7s var(--ease), transform .7s var(--ease)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font:400 16px/1 var(--sans);white-space:nowrap;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn--dark{background:var(--text);color:#fff}
+.btn--dark:hover{background:#2b2b2b}
+.btn--line{border:1px solid #d6d6d6;color:var(--text)}
+.btn--line:hover{border-color:#111}
+.btn .i{transition:transform .25s var(--ease)}
+.btn:hover .i.out{transform:translate(2px,-2px)}
+.btn:hover .i.down{transform:translateY(2px)}
+.btn:hover .i.back{transform:translateX(-3px)}
+
+/* ---------- floating nav (same as homepage) ---------- */
+.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;padding:6px;border-radius:999px;max-width:calc(100% - 24px);
+  background:#fff}
+.nav__links{display:flex;gap:4px;list-style:none}
+.nav__links a{position:relative;display:flex;align-items:center;height:44px;padding:0 12px;border-radius:999px;font-size:15px;font-weight:500;white-space:nowrap;color:var(--muted);transition:color .25s, background-color .25s}
+.nav__links a svg.i{width:20px;height:20px}
+.nav__links a:hover{color:var(--text);background:var(--primary-soft)}
+.nav__links a.active{color:var(--primary);background:var(--primary-soft)}
+.nav__label{display:block;max-width:0;opacity:0;overflow:hidden}
+.nav__links a.active .nav__label{max-width:160px;opacity:1;margin-left:8px}
+.nav__links a:not(.active)::after{content:attr(data-tip);position:absolute;left:50%;top:calc(100% + 10px);transform:translate(-50%,-4px);padding:6px 10px;border-radius:var(--radius-sm);
+  font-size:13px;font-weight:500;white-space:nowrap;color:var(--text);background:var(--glass-strong);box-shadow:0 0 0 1px var(--glass-ring), var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s, transform .2s var(--ease)}
+.nav__links a:not(.active):hover::after,.nav__links a:not(.active):focus-visible::after{opacity:1;transform:translate(-50%,0)}
+.nav__links a.nav__home{padding:0 4px;background:none}
+.avatar-logo{display:block;width:36px;height:36px;border-radius:50%;
+  background:url(assets/character.png) 47% 13%/300% auto no-repeat, #f0f0f0;box-shadow:0 0 0 1px var(--glass-ring);transition:transform .25s var(--ease)}
+.nav__home:hover .avatar-logo{transform:scale(1.06)}
+.nav__cta{display:inline-flex;align-items:center;gap:6px;height:44px;margin-left:6px;padding:0 16px;border-radius:999px;font-size:15px;font-weight:500;white-space:nowrap;color:#fff;
+  background:var(--primary);transition:transform .25s var(--ease), background-color .25s}
+.nav__cta:hover{transform:translateY(-1px);background:#2b2b2b}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center;padding:128px 0 72px}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;font:400 14px/1.4 var(--sub);color:var(--muted);margin-bottom:28px}
+.crumbs a{display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.crumbs a:hover{color:var(--primary)}
+.crumbs li:not(:last-child)::after{content:"/";margin-left:8px;opacity:.4}
+.crumbs [aria-current]{color:var(--text)}
+.hero h1{margin-top:0;font:300 clamp(42px,5.6vw,72px)/1.04 var(--heading);letter-spacing:-.015em;text-wrap:balance}
+.lead{margin-top:24px;max-width:600px;font-size:19px;line-height:1.7;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:20px 48px;margin-top:40px}
+.meta dt{font:400 12px/1 var(--sub);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.meta dd{font:400 18px/1.3 var(--sans);color:var(--text)}
+/* browser mockup on the right */
+.browser{border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--line), 0 30px 60px -36px rgba(0,0,0,.25);transform:rotate(1.5deg)}
+.browser__bar{display:flex;align-items:center;gap:6px;height:38px;padding:0 14px;background:#f6f6f6;border-bottom:1px solid var(--line)}
+.browser__bar i{width:9px;height:9px;border-radius:50%;background:#d5dbe7}
+.browser__bar span{margin-left:12px;padding:3px 12px;border-radius:999px;background:#fff;font-size:12px;color:var(--muted)}
+.browser .ph{border-radius:0;box-shadow:none;aspect-ratio:4/5}
+
+/* ---------- body ---------- */
+.case{display:grid;grid-template-columns:200px minmax(0,1fr);gap:72px;padding:24px 0 40px;border-top:1px solid var(--line)}
+.toc{position:sticky;top:110px;align-self:start;padding-top:72px}
+.toc p{font:400 12px/1 var(--sub);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.toc ol{list-style:none;border-left:1px solid var(--line)}
+.toc a{display:block;padding:8px 0 8px 20px;margin-left:-1px;border-left:2px solid transparent;font-size:15px;color:var(--muted);transition:color .2s, border-color .2s}
+.toc a:hover{color:var(--text)}
+.toc a.active{color:var(--text);border-left-color:var(--primary);font-weight:400}
+.content{min-width:0;max-width:800px}
+.sec{padding-top:72px}
+.kicker{font:400 14px/1 var(--sub);letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:16px}
+.sec h2{font:300 clamp(32px,4vw,48px)/1.1 var(--heading);letter-spacing:-.01em;text-wrap:balance}
+.sec > p,.para{margin-top:20px;color:var(--muted)}
+.sec p strong,.para strong{color:var(--text)}
+.quote{margin:36px 0 8px;padding:28px 32px;border-left:2px solid var(--primary);border-radius:0 var(--radius) var(--radius) 0;background:#f7f7f7;font:300 clamp(24px,2.6vw,30px)/1.35 var(--heading);color:var(--text)}
+.quote small{display:block;margin-top:10px;font:400 13px/1 var(--sub);letter-spacing:.12em;text-transform:uppercase;font-style:normal;color:var(--muted)}
+.h3{font:400 22px/1.3 var(--sub);color:var(--text)}
+
+/* numbered items (big serif numerals) */
+.steps{list-style:none;display:grid;gap:36px;margin-top:40px}
+.step{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px}
+.step__n{font:300 44px/1 var(--heading);color:var(--primary)}
+.step p{margin-top:8px;color:var(--muted)}
+.steps--sm{gap:24px}
+.steps--sm .step{grid-template-columns:56px minmax(0,1fr)}
+.steps--sm .step__n{font-size:34px}
+
+/* Notion-like toggles */
+.toggle{margin-top:14px;border-top:1px solid var(--line)}
+.toggle + .toggle{margin-top:0}
+.toggle summary{display:flex;align-items:center;gap:10px;padding:12px 0;cursor:pointer;list-style:none;font:400 16px/1.3 var(--sub);color:var(--text)}
+.toggle summary::-webkit-details-marker{display:none}
+.toggle summary::before{content:"";width:0;height:0;border-left:6px solid currentColor;border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;transition:transform .25s var(--ease);opacity:.6}
+.toggle[open] summary::before{transform:rotate(90deg)}
+.toggle summary:hover{color:var(--primary)}
+.toggle ul{list-style:none;display:grid;gap:8px;padding:0 0 16px 18px}
+.toggle li{position:relative;padding-left:18px;color:var(--muted)}
+.toggle li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:#cfcfcf}
+.toggle.fix li::before{background:var(--primary)}
+.toggle li b{color:var(--text)}
+
+/* two-column text (no cards) */
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:36px;border-top:1px solid var(--line)}
+.cols > div{padding:28px 32px 4px 0}
+.cols > div + div{padding-left:32px;border-left:1px solid var(--line)}
+.dots{list-style:none;display:grid;gap:8px;margin-top:14px}
+.dots li{position:relative;padding-left:18px;color:var(--muted)}
+.dots li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--primary)}
+.small-label{margin-top:16px;font:400 13px/1.5 var(--sub);color:var(--muted)}
+.small-label b{color:var(--text);font-weight:400}
+
+/* demographics table */
+.rows{margin-top:36px;border-top:1px solid var(--line)}
+.rows div{display:grid;grid-template-columns:160px minmax(0,1fr);gap:24px;padding:16px 0;border-bottom:1px solid var(--line)}
+.rows dt{font:400 15px/1.6 var(--sub);color:var(--text)}
+.rows dd{color:var(--muted)}
+.sub-h{margin-top:56px}
+
+/* design pages */
+.page{margin-top:64px}
+.page__head{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}
+.page__head .h3{padding-top:2px}
+.page__head p{color:var(--muted)}
+.page__head p strong{color:var(--text)}
+.goal-line{display:flex;gap:10px;margin-top:12px;font-size:15px;color:var(--text)}
+.goal-line::before{content:"→";color:var(--primary)}
+.shots{display:grid;gap:14px;margin-top:24px}
+.shots .full{aspect-ratio:16/9}
+.shots .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.shots .pair .ph{aspect-ratio:4/3}
+.mock{margin-top:36px;aspect-ratio:16/9}
+
+/* outcomes */
+.checks{list-style:none;display:grid;gap:14px;margin-top:28px}
+.checks li{display:flex;gap:14px;align-items:flex-start;font:400 19px/1.5 var(--sub);color:var(--text)}
+.checks svg{width:24px;height:24px;flex:none;margin-top:2px;color:var(--primary)}
+
+/* end */
+.end{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;margin-top:96px;padding:40px 0;border-top:1px solid var(--line)}
+.end h2{font:300 clamp(28px,3vw,36px)/1.15 var(--heading)}
+.end .actions{display:flex;flex-wrap:wrap;gap:12px}
+.footer{margin-top:48px;padding:28px 0 48px;font-size:14px;background:#111111;color:#a3a3a3}
+
+@media (max-width:1100px){
+  .case{grid-template-columns:1fr;gap:0}
+  .toc{display:none}
+  .content{max-width:none}
+}
+@media (max-width:900px){
+  html{scroll-padding-top:24px}
+  .nav{top:auto;bottom:calc(14px + env(safe-area-inset-bottom, 0px));max-width:calc(100% - 20px)}
+  .nav__links{gap:0}
+  .nav__links a{height:46px;padding:0 8px;font-size:12px}
+  .nav__links a.active .nav__label{max-width:104px;margin-left:6px}
+  .nav__links a:not(.active)::after{top:auto;bottom:calc(100% + 10px)}
+  .avatar-logo{width:34px;height:34px}
+  .nav__cta{width:40px;height:40px;padding:0;justify-content:center;margin-left:2px}
+  .nav__cta-text{display:none}
+  .hero{grid-template-columns:1fr;gap:48px;padding-top:56px}
+  .browser{max-width:420px;transform:none}
+  .browser .ph{aspect-ratio:4/3}
+  .page__head{grid-template-columns:1fr;gap:8px}
+  .footer{padding-bottom:120px}
+}
+@media (max-width:640px){
+  :root{--gutter:16px}
+  body{font-size:16px}
+  .lead{font-size:17px}
+  .meta{gap:20px 32px}
+  .cols{grid-template-columns:1fr}
+  .cols > div{padding:24px 0 4px}
+  .cols > div + div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .rows div{grid-template-columns:1fr;gap:4px}
+  .step{grid-template-columns:52px minmax(0,1fr)}
+  .step__n{font-size:34px}
+  .shots .pair{grid-template-columns:1fr}
+  .btn{height:48px;padding:0 20px;font-size:15px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+}
+/* real images */
+.shot{border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 1px var(--line);background:#f6f6f6}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.scrollshot-wrap{position:relative}
+.scrollshot{height:min(72vh,640px);overflow-y:auto;border-radius:var(--radius);box-shadow:0 0 0 1px var(--line);overscroll-behavior:contain;scrollbar-width:thin;background:#f6f6f6}
+.scrollshot img{display:block;width:100%;height:auto}
+.scrollshot-wrap::after{content:"Scroll ↓";position:absolute;right:12px;bottom:12px;padding:6px 10px;border-radius:999px;background:#111;color:#fff;font:400 12px/1 var(--sub);pointer-events:none}
+.banner{margin:0 0 8px;border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+.banner img{display:block;width:100%;aspect-ratio:5/2;object-fit:cover}
+.browser img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.mock.shot{aspect-ratio:3/2}
+.shots .pair .shot{aspect-ratio:16/9}
+
+/* ---------- Top nav: name + pill + Say Hello; pulls together on scroll ---------- */
+.topnav{position:fixed;top:16px;left:0;right:0;z-index:100;pointer-events:none}
+.topnav__in{pointer-events:auto;margin:0 auto;width:calc(100% - 48px);max-width:1180px;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:max-width .7s cubic-bezier(.2,.7,.2,1)}
+.topnav.compact .topnav__in{max-width:var(--cw,640px)}
+.brand{flex:none;display:inline-flex;align-items:center;height:52px;border-radius:999px;color:#111;font:400 19px/1 var(--sub);white-space:nowrap;transition:background-color .4s, box-shadow .4s}
+.brand__mark{display:grid;place-items:center;width:52px;height:52px;margin-right:-6px;font-size:18px;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.brand__mark img{width:40px;height:40px;object-fit:contain;mix-blend-mode:multiply}  /* memoji has a white ground */
+.brand:hover .brand__mark{transform:rotate(-8deg) scale(1.08)}
+@media (hover:hover){
+  /* hover: the name tucks away and only the memoji stays, like the compact state */
+  .brand:hover{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+  .brand:hover .brand__mark{margin-right:0}
+  .brand:hover .brand__name{max-width:0;opacity:0;padding-right:0}
+}
+.brand__name{display:block;max-width:220px;overflow:hidden;opacity:1;padding-right:10px;transition:max-width .6s cubic-bezier(.2,.7,.2,1), opacity .3s, padding .6s}
+.topnav.compact .brand{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+.topnav.compact .brand__mark{margin-right:0}
+.topnav.compact .brand__name{max-width:0;opacity:0;padding-right:0}
+.pill ul{display:flex;gap:2px;list-style:none;margin:0;padding:5px;border-radius:999px;background:#f3f3f3;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -18px rgba(0,0,0,.3)}
+.pill a{display:flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:999px;font:400 15px/1 var(--sub);color:#6b6b6b;white-space:nowrap;transition:color .2s, background-color .2s, box-shadow .2s}
+.pill a:hover{color:#111}
+.pill a.active{background:#fff;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.pill svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pill a.active svg{fill:currentColor;fill-opacity:.12}
+.sayhi{flex:none;display:inline-flex;align-items:center;height:52px;padding:0 22px 0 16px;border-radius:999px;background:#111;color:#fff;font:400 16px/1 var(--sub);white-space:nowrap;transition:padding .6s cubic-bezier(.2,.7,.2,1), background-color .2s}
+.sayhi:hover{background:#2b2b2b}
+.sayhi__hand{display:inline-block;font-size:20px;line-height:1;transform-origin:70% 80%;animation:handwave 2.2s ease-in-out infinite}
+.sayhi__text{display:block;max-width:110px;margin-left:8px;overflow:hidden;opacity:1;transition:max-width .6s cubic-bezier(.2,.7,.2,1), opacity .3s, margin .6s}
+.topnav.compact .sayhi{padding:0 15px}
+.topnav.compact .sayhi__text{max-width:0;opacity:0;margin-left:0}
+@keyframes handwave{0%,55%,100%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-8deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-4deg)}48%{transform:rotate(8deg)}}
+@media (max-width:900px){
+  .topnav{top:auto;bottom:calc(14px + env(safe-area-inset-bottom, 0px))}
+  .topnav__in{width:calc(100% - 20px);max-width:var(--cw,360px) !important;justify-content:center}
+  .brand{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+  .brand__mark{margin-right:0}
+  .brand__name,.sayhi__text{max-width:0;opacity:0;margin-left:0;padding-right:0}
+  .sayhi{padding:0 15px}
+  .pill a{padding:0 11px;font-size:13px}
+  .pill a span{display:none}
+  .pill a.active span{display:inline}
+}
+@media (prefers-reduced-motion: reduce){.sayhi__hand{animation:none}}
+</style>
+<link rel="stylesheet" href="assets/motion.css">
+</head>
+<body>
+
+<!-- ================= FLOATING NAV ================= -->
+<header class="topnav" id="nav">
+  <div class="topnav__in">
+    <a class="brand" href="index.html" aria-label="Fachryall, home"><span class="brand__mark" aria-hidden="true"><img src="assets/memoji.png" width="256" height="256" alt=""></span><span class="brand__name">Fachryall</span></a>
+    <nav class="pill" aria-label="Main"><ul><li><a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Come In</span></a></li><li><a href="meet-me.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5v.01M15 9.5v.01"/></svg><span>Meet Me</span></a></li><li><a href="work.html" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span>My Lab</span></a></li></ul></nav>
+    <a class="sayhi" href="https://www.linkedin.com/in/fachriallkhijaro/" target="_blank" rel="noopener" aria-label="Say hello on LinkedIn"><span class="sayhi__hand" aria-hidden="true">👋</span><span class="sayhi__text">Say Hello</span></a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div>
+    <nav aria-label="Breadcrumb">
+      <ol class="crumbs">
+        <li><a href="work.html">My Lab</a></li>
+        <li><a href="work.html#uiux">UI/UX Design</a></li>
+        <li><span aria-current="page">Website - Cekat.AI</span></li>
+      </ol>
+    </nav>
+    <h1>A friendlier front door for AI customer service.</h1>
+    <p class="lead">Visitors couldn’t tell quickly how Cekat.AI works or why their business needs it, and the calls-to-action didn’t invite them to try it. The revamp rebuilt the website around a clear path to a free trial, casual copy, live demos, and industry use cases.</p>
+    <dl class="meta">
+      <div><dt>Role</dt><dd>UI/UX Design</dd></div>
+      <div><dt>Company</dt><dd>Cekat.AI</dd></div>
+      <div><dt>Year</dt><dd>2025</dd></div>
+      <div><dt>Platform</dt><dd>Website · B2B SaaS</dd></div>
+    </dl>
+  </div>
+  <div class="browser" aria-hidden="true">
+    <div class="browser__bar"><i></i><i></i><i></i><span>cekat.ai</span></div>
+    <img src="assets/work/cekat-ai/homepage-hero.jpg" width="1920" height="1080" alt="Cekat.AI homepage hero" decoding="async">
+  </div>
+</header>
+
+<figure class="banner reveal"><img src="assets/work/cekat-ai/cover.jpg" width="1500" height="600" alt="Cekat.AI website revamp cover" loading="lazy" decoding="async"></figure>
+
+<!-- ================= CASE ================= -->
+<div class="case">
+  <aside class="toc" aria-label="On this page">
+    <p>On this page</p>
+    <ol id="toc">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#problem">The problem</a></li>
+      <li><a href="#audience">The audience</a></li>
+      <li><a href="#design">The design</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+    </ol>
+  </aside>
+
+  <article class="content">
+
+    <section class="sec reveal" id="overview">
+      <p class="kicker">01 · Overview</p>
+      <h2>An AI product that needed a clearer story.</h2>
+      <p>Cekat.AI is an AI chat omnichannel platform that helps businesses automate and analyze their customer conversations. The website had to do more than describe features: it needed to bring more people in and help them understand the product fast enough to try it.</p>
+      <p class="quote">Make Cekat.AI easy to understand, easy to trust, and easy to try.<small>The goal behind every page</small></p>
+    </section>
+
+    <section class="sec reveal" id="problem">
+      <p class="kicker">02 · The problem</p>
+      <h2>Four gaps between a visit and a trial.</h2>
+      <p>Each goal of the revamp started from a gap on the old website. Open a toggle to see what was wrong and what changed.</p>
+
+      <ol class="steps">
+        <li class="step">
+          <span class="step__n">01</span>
+          <div>
+            <h3 class="h3">Engagement &amp; conversion</h3>
+            <p>Visitors weren’t guided toward trying the product.</p>
+            <details class="toggle"><summary>Current issues</summary>
+              <ul><li>The site structure didn’t lead visitors toward trying the service.</li><li>Calls-to-action weren’t prominent or engaging enough.</li></ul></details>
+            <details class="toggle fix"><summary>Solutions</summary>
+              <ul><li><b>Clearer navigation flow</b> from awareness to consideration to conversion.</li><li><b>Stronger CTAs</b> with casual, action-led copy.</li><li><b>Live demo &amp; video explainer</b> so the benefit is clear in seconds.</li></ul></details>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step__n">02</span>
+          <div>
+            <h3 class="h3">A brand that feels close</h3>
+            <p>The tone and visuals felt distant from the people it was selling to.</p>
+            <details class="toggle"><summary>Current issues</summary>
+              <ul><li>Tone of voice and visuals weren’t friendly enough for the target market.</li><li>The value of AI for business communication wasn’t highlighted.</li></ul></details>
+            <details class="toggle fix"><summary>Solutions</summary>
+              <ul><li><b>Casual, persuasive language</b>, referencing Gojek, Kammo, and Flip.</li><li><b>Fresher, more playful visuals</b> relevant to each industry.</li><li><b>Real testimonials</b> and case studies from active users.</li></ul></details>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step__n">03</span>
+          <div>
+            <h3 class="h3">UX &amp; SEO best practices</h3>
+            <p>The site was slower and harder to find than it should be.</p>
+            <details class="toggle"><summary>Current issues</summary>
+              <ul><li>Not fully optimized for SEO or loading speed.</li><li>The information structure could be simpler.</li></ul></details>
+            <details class="toggle fix"><summary>Solutions</summary>
+              <ul><li><b>Speed optimization</b>: compressed images, a CDN, and leaner code.</li><li><b>Mobile-first design</b> that stays comfortable on phones.</li><li><b>SEO</b> keywords that match how users search.</li></ul></details>
+          </div>
+        </li>
+        <li class="step">
+          <span class="step__n">04</span>
+          <div>
+            <h3 class="h3">Easier decisions</h3>
+            <p>Not everyone understood how the AI would help their business.</p>
+            <details class="toggle"><summary>Current issues</summary>
+              <ul><li>Visitors didn’t immediately see how the AI works or what it does for them.</li><li>The benefits for different industries needed more explanation.</li></ul></details>
+            <details class="toggle fix"><summary>Solutions</summary>
+              <ul><li><b>Industry use cases</b> showing how Cekat.AI helps each business type.</li><li><b>Live chatbot demo</b> on the homepage to try the AI right away.</li></ul></details>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="sec reveal" id="audience">
+      <p class="kicker">03 · The audience</p>
+      <h2>Two markets, one website.</h2>
+      <p>Cekat.AI helps businesses manage customer communication more efficiently. The website had to speak to small teams that want simplicity and to large teams that want control.</p>
+
+      <div class="cols">
+        <div>
+          <h3 class="h3">SMEs (UMKM) &amp; startups</h3>
+          <ul class="dots"><li>Want faster replies without growing the team.</li><li>Need automation for repetitive questions.</li><li>Want to sell more without being online 24/7.</li></ul>
+          <p class="small-label"><b>Industries:</b> e-commerce &amp; online shops, F&amp;B, services &amp; consulting</p>
+        </div>
+        <div>
+          <h3 class="h3">Mid-size to enterprise</h3>
+          <ul class="dots"><li>Handle high chat volumes across channels.</li><li>Need AI customer service to work efficiently.</li><li>Want one omnichannel system to manage teams.</li></ul>
+          <p class="small-label"><b>Industries:</b> banking &amp; finance, property &amp; real estate, retail &amp; consumer goods</p>
+        </div>
+      </div>
+
+      <dl class="rows">
+        <div><dt>Age</dt><dd>25–45: business owners, managers, and customer support leads.</dd></div>
+        <div><dt>Gender</dt><dd>Not gender-specific; leans toward owners and support managers.</dd></div>
+        <div><dt>Location</dt><dd>Indonesia, mainly Jakarta, Bandung, Surabaya, and Medan.</dd></div>
+        <div><dt>Tech level</dt><dd>From teams already using CRM and chatbots to SMEs just going digital.</dd></div>
+      </dl>
+
+      <h3 class="h3 sub-h">Insights that shaped the design</h3>
+      <ol class="steps steps--sm">
+        <li class="step"><span class="step__n">01</span><div><h3 class="h3">Relatable language</h3><p>Casual, easy-to-understand copy to reach SMEs.</p></div></li>
+        <li class="step"><span class="step__n">02</span><div><h3 class="h3">Low-risk acquisition</h3><p>Educate through business and SME communities, and offer a free trial or freemium plan.</p></div></li>
+        <li class="step"><span class="step__n">03</span><div><h3 class="h3">Features for each market</h3><p>Easy setup and a simple UI for SMEs; stronger analytics and CRM integration for enterprises.</p></div></li>
+      </ol>
+
+      <div class="shot mock"><img src="assets/work/cekat-ai/laptop-mockup.jpg" width="2048" height="1365" alt="The new Cekat.AI website on a laptop" loading="lazy" decoding="async"></div>
+    </section>
+
+    <section class="sec reveal" id="design">
+      <p class="kicker">04 · The design</p>
+      <h2>Six pages, one clear path.</h2>
+      <p>Every page has one job, and each one moves the visitor a step closer to a trial.</p>
+
+      <div class="page">
+        <div class="page__head"><h3 class="h3">Homepage</h3><div>
+          <p>A quick overview of what Cekat.AI offers, with a <strong>hero and relatable tagline, testimonials, client logos, and case studies</strong>.</p>
+          <p class="goal-line">Introduce Cekat.AI in an engaging way and invite users to explore.</p></div></div>
+        <div class="shots"><div class="scrollshot-wrap"><div class="scrollshot" tabindex="0" role="region" aria-label="Homepage, full page, scroll to see the full page"><img src="assets/work/cekat-ai/homepage-full.jpg" width="960" height="4336" alt="Homepage, full page" loading="lazy" decoding="async"></div></div>
+          <div class="pair"><div class="shot "><img src="assets/work/cekat-ai/homepage-hero.jpg" width="1920" height="1080" alt="Homepage hero section" loading="lazy" decoding="async"></div><div class="shot "><img src="assets/work/cekat-ai/homepage-sections.jpg" width="1920" height="1080" alt="Homepage sections" loading="lazy" decoding="async"></div></div></div>
+      </div>
+
+      <div class="page">
+        <div class="page__head"><h3 class="h3">Features</h3><div>
+          <p>Each capability explained with clear visuals: the <strong>AI chatbot</strong>, <strong>omnichannel integration</strong>, and <strong>analytics &amp; performance reports</strong>.</p>
+          <p class="goal-line">Help users see how each feature supports their business.</p></div></div>
+        <div class="shots"><div class="scrollshot-wrap"><div class="scrollshot" tabindex="0" role="region" aria-label="Features page, full page, scroll to see the full page"><img src="assets/work/cekat-ai/features-full.jpg" width="960" height="2539" alt="Features page, full page" loading="lazy" decoding="async"></div></div>
+          <div class="pair"><div class="shot "><img src="assets/work/cekat-ai/features-hero.jpg" width="1920" height="1080" alt="Features hero banner" loading="lazy" decoding="async"></div><div class="shot "><img src="assets/work/cekat-ai/features-section.jpg" width="1920" height="1080" alt="Features section" loading="lazy" decoding="async"></div></div></div>
+      </div>
+
+      <div class="page">
+        <div class="page__head"><h3 class="h3">Pricing</h3><div>
+          <p>Packages with a feature breakdown and a <strong>comparison table</strong>, a <strong>free trial</strong> to start, and <strong>custom plans</strong> for larger businesses.</p>
+          <p class="goal-line">Make it easy to pick the right package.</p></div></div>
+        <div class="shots"><div class="shot full"><img src="assets/work/cekat-ai/pricing.jpg" width="1920" height="1080" alt="Pricing page" loading="lazy" decoding="async"></div></div>
+      </div>
+
+      <div class="page">
+        <div class="page__head"><h3 class="h3">Careers</h3><div>
+          <p>Open roles with <strong>requirements and how to apply</strong>, plus culture, values, and <strong>employee testimonials</strong>.</p>
+          <p class="goal-line">Attract strong talent and build a cohesive team.</p></div></div>
+        <div class="shots"><div class="scrollshot-wrap"><div class="scrollshot" tabindex="0" role="region" aria-label="Careers page, scroll to see the full page"><img src="assets/work/cekat-ai/careers-hero.jpg" width="1920" height="3673" alt="Careers page" loading="lazy" decoding="async"></div></div>
+          <div class="pair"><div class="shot "><img src="assets/work/cekat-ai/careers-section-1.jpg" width="1920" height="1080" alt="Careers section" loading="lazy" decoding="async"></div><div class="shot "><img src="assets/work/cekat-ai/careers-section-2.jpg" width="1920" height="1080" alt="Careers section" loading="lazy" decoding="async"></div></div>
+          <div class="scrollshot-wrap"><div class="scrollshot" tabindex="0" role="region" aria-label="Career detail page, scroll to see the full page"><img src="assets/work/cekat-ai/careers-detail.jpg" width="1920" height="3070" alt="Career detail page" loading="lazy" decoding="async"></div></div></div>
+      </div>
+
+      <div class="page">
+        <div class="page__head"><h3 class="h3">Blog</h3><div>
+          <p>Articles on AI, chatbots, and digital business: <strong>tips</strong>, <strong>business case studies</strong>, and <strong>technology trends</strong>, written to be <strong>SEO-friendly</strong>.</p>
+          <p class="goal-line">Build thought leadership and bring in organic traffic.</p></div></div>
+        <div class="shots"><div class="scrollshot-wrap"><div class="scrollshot" tabindex="0" role="region" aria-label="Blog page, scroll to see the full page"><img src="assets/work/cekat-ai/blog.jpg" width="1920" height="4270" alt="Blog page" loading="lazy" decoding="async"></div></div></div>
+      </div>
+
+      <div class="page">
+        <div class="page__head"><h3 class="h3">About Us</h3><div>
+          <p>The company’s <strong>vision, mission, and values</strong>, <strong>team and founders</strong>, and <strong>awards</strong>, with a way to <strong>contact the team or book a demo</strong>.</p>
+          <p class="goal-line">Build trust with customers and investors.</p></div></div>
+        <div class="shots"><div class="scrollshot-wrap"><div class="scrollshot" tabindex="0" role="region" aria-label="About Us page, scroll to see the full page"><img src="assets/work/cekat-ai/about-us.jpg" width="1920" height="4516" alt="About Us page" loading="lazy" decoding="async"></div></div></div>
+      </div>
+    </section>
+
+    <section class="sec reveal" id="reflection">
+      <p class="kicker">05 · Reflection</p>
+      <h2>What changed, and what’s next.</h2>
+      <p>The revamp gave Cekat.AI a website that is <strong>more user-friendly, more engaging, and better built for conversion</strong>.</p>
+      <ul class="checks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>Users understand the benefits of Cekat.AI faster.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>Engagement and user retention went up.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>SEO and website performance improved.</li>
+      </ul>
+
+      <h3 class="h3 sub-h">Next steps</h3>
+      <ol class="steps steps--sm">
+        <li class="step"><span class="step__n">01</span><div><h3 class="h3">Iterate with data</h3><p>Study heatmaps and user behavior to keep improving the UX.</p></div></li>
+        <li class="step"><span class="step__n">02</span><div><h3 class="h3">A/B test the copy</h3><p>Find the most effective CTAs and wording.</p></div></li>
+        <li class="step"><span class="step__n">03</span><div><h3 class="h3">Grow the content</h3><p>More blog posts, videos, and social proof to build brand awareness.</p></div></li>
+      </ol>
+    </section>
+
+    <div class="end reveal">
+      <h2>More things I’ve made.</h2>
+      <div class="actions">
+        <a class="btn btn--line" href="work.html"><svg class="i i--duo cta-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>All work</a>
+        <a class="btn btn--dark" href="https://www.linkedin.com/in/fachriallkhijaro/" target="_blank" rel="noopener">Say Hi 💬</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>©<span id="yr">2026</span> Fachri All Khijaro · All works are not to be used without written permission.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll reveal */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* "On this page": highlight the section being read */
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function spy() {
+    var mid = innerHeight * 0.35, hit = 0;
+    targets.forEach(function (t, i) { if (t.getBoundingClientRect().top <= mid) hit = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === hit); });
+  }
+  addEventListener('scroll', spy, { passive: true });
+  spy();
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+<script>
+/* top nav: logo + Say Hello slide in next to the pill once you scroll */
+(function () {
+  var n = document.getElementById('nav'); if (!n || !n.classList.contains('topnav')) return;
+  var pill = n.querySelector('.pill ul');
+  function fit() { n.style.setProperty('--cw', (pill.offsetWidth + 2 * 52 + 16) + 'px'); }
+  function on() { n.classList.toggle('compact', scrollY > 40); }
+  fit(); on();
+  addEventListener('scroll', on, { passive: true });
+  addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="assets/motion.js"></script>
+</body>
+</html>

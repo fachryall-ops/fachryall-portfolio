@@ -1,0 +1,50 @@
+/* Shared scroll motion for every page (paired with assets/motion.js).
+   Uses the individual `translate` / `scale` properties so elements keep their own `transform` (tilts, hovers). */
+:root{--m-ease:cubic-bezier(.16,1,.3,1)}
+html.lenis,html.lenis body{height:auto}
+html.lenis{scroll-behavior:auto !important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:clip}
+
+/* motion.js takes over the old section-level reveal */
+html.m-on .reveal{opacity:1 !important;transform:none !important;transition:none}
+
+html.m-on .m-item{opacity:0;translate:0 32px;filter:blur(6px);
+  transition:opacity .9s var(--m-ease) var(--md,0s), translate 1.2s var(--m-ease) var(--md,0s), filter .9s var(--m-ease) var(--md,0s)}
+html.m-on .m-item.m-media{translate:0 48px;scale:.97;filter:none;
+  transition:opacity 1s var(--m-ease) var(--md,0s), translate 1.3s var(--m-ease) var(--md,0s), scale 1.3s var(--m-ease) var(--md,0s)}
+html.m-on .m-item.m-in{opacity:1;translate:none;scale:none;filter:none}
+
+/* Images inside clipped frames drift slightly with scroll */
+.m-par{scale:1.1;will-change:translate}
+
+@media (prefers-reduced-motion: reduce){
+  html.m-on .m-item{opacity:1;translate:none;scale:none;filter:none;transition:none}
+  .m-par{scale:none;translate:none !important}
+}
+
+/* ---------- Micro interactions (added where a component had none) ----------
+   Selectors use :where() so any rule already defined on a component still wins. */
+@media (prefers-reduced-motion: no-preference){
+  :where(a.btn,.btn){transition:transform .35s var(--m-ease), box-shadow .35s var(--m-ease), background-color .3s, color .3s, border-color .3s}
+  :where(a.btn):hover{transform:translateY(-2px)}
+  :where(a.btn):active{transform:translateY(0) scale(.98)}
+
+  :where(.chip,.tag,span.pill){transition:transform .3s var(--m-ease), background-color .3s, color .3s}
+  :where(.chip,.tag,span.pill):hover{transform:translateY(-2px)}
+
+  :where(.banner,.cover-shot,.shot,.portrait,.pcard__cover){transition:scale .8s var(--m-ease)}
+  :where(.banner,.cover-shot,.shot,.portrait,.pcard__cover):hover img{scale:1.035}
+  :where(.banner,.cover-shot,.shot,.portrait,.pcard__cover) img{transition:scale .8s var(--m-ease)}
+
+  :where(.quote){transition:border-left-color .4s var(--m-ease), background-color .4s}
+  :where(.quote):hover{border-left-color:#111;background-color:#f1f1f1}
+
+  :where(.footer ul a){background-image:linear-gradient(currentColor,currentColor);background-size:0 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .4s var(--m-ease), color .2s}
+  :where(.footer ul a):hover{background-size:100% 1px}
+
+  :where(.cta .btn):hover{box-shadow:0 14px 30px -14px rgba(0,0,0,.45)}
+
+  :where(.btn--link){transition:color .25s}
+  :where(.btn--link):hover{color:#111}
+}

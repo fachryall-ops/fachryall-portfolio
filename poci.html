@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Poci (Product Ocistok) — Fachri All Khijaro</title>
+<meta name="description" content="The Poci platform is already in the development stage, so it has not yet reached the launch stage">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fustat:wght@400;500&family=Inter:wght@300;400;500;600&family=Instrument+Serif&display=swap" rel="stylesheet">
+<style>
+strong,b{font-weight:500}
+/* Headings: Ortica Light (self-hosted; add the files to assets/fonts/) */
+@font-face{font-family:"Ortica";font-weight:300;font-style:normal;font-display:swap;
+  src:url("assets/fonts/Ortica-Light.woff2") format("woff2"),url("assets/fonts/Ortica-Light.woff") format("woff")}
+
+/* Layout: editorial case study — short hero with mockup, then sticky "On this page" + one reading column */
+:root{
+  --radius:10px; --radius-sm:6px;
+  --bg:#ffffff;
+  --text:#111111;
+  --muted:#5f5f5f;
+  --line:#ebebeb;
+  --primary:#111111;
+  --primary-soft:#f2f2f2;
+  --surface-2:#f6f6f6;
+  --glass:#ffffff;
+  --glass-strong:#ffffff;
+  --glass-border:#ebebeb;
+  --glass-ring:transparent;
+  --shadow:0 1px 2px rgba(0,0,0,.04);
+  --ph-strong:#f1f1f1;
+  --sans:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;   /* paragraphs: Inter Light */
+  --heading:"Ortica", "Instrument Serif", Georgia, serif;           /* headings: Ortica Light */
+  --sub:"Fustat", "Inter", system-ui, sans-serif;                    /* sub-headings: Fustat Regular */
+  --max:1160px;
+  --gutter:24px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{background:var(--bg);color:var(--text);font:300 17px/1.75 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block;height:auto}
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* closed-shape icons get the same soft tint as the active navbar icon */
+svg.i.i--duo{fill:currentColor;fill-opacity:.12}
+/* CTA icons: each one names its action; on hover they tilt like the navbar memoji */
+svg.i.cta-ic{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+a:hover svg.i.cta-ic,a:focus-visible svg.i.cta-ic,.pcard:hover svg.i.cta-ic,.collage:hover svg.i.cta-ic{transform:rotate(-8deg) scale(1.1)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:var(--radius-sm)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+main{overflow-x:clip}
+.glass{background:var(--glass);
+  border:1px solid var(--glass-border);box-shadow:0 0 0 1px var(--glass-ring), var(--shadow)}
+
+/* image placeholder (swap for the Notion screenshots) */
+.ph{position:relative;display:grid;place-items:center;overflow:hidden;border-radius:var(--radius);color:var(--muted);font-size:13px;font-weight:400;
+  background:var(--ph-strong);
+  box-shadow:0 0 0 1px var(--glass-ring)}
+.ph span{padding:6px 12px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--glass-border);text-align:center}
+
+.reveal{opacity:0;transform:translateY(16px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .7s var(--ease), transform .7s var(--ease)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font:400 16px/1 var(--sans);white-space:nowrap;
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn--dark{background:var(--text);color:#fff}
+.btn--dark:hover{background:#2b2b2b}
+.btn--line{border:1px solid #d6d6d6;color:var(--text)}
+.btn--line:hover{border-color:#111}
+.btn .i{transition:transform .25s var(--ease)}
+.btn:hover .i.out{transform:translate(2px,-2px)}
+.btn:hover .i.down{transform:translateY(2px)}
+.btn:hover .i.back{transform:translateX(-3px)}
+
+/* ---------- floating nav (same as homepage) ---------- */
+.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;padding:6px;border-radius:999px;max-width:calc(100% - 24px);
+  background:#fff}
+.nav__links{display:flex;gap:4px;list-style:none}
+.nav__links a{position:relative;display:flex;align-items:center;height:44px;padding:0 12px;border-radius:999px;font-size:15px;font-weight:500;white-space:nowrap;color:var(--muted);transition:color .25s, background-color .25s}
+.nav__links a svg.i{width:20px;height:20px}
+.nav__links a:hover{color:var(--text);background:var(--primary-soft)}
+.nav__links a.active{color:var(--primary);background:var(--primary-soft)}
+.nav__label{display:block;max-width:0;opacity:0;overflow:hidden}
+.nav__links a.active .nav__label{max-width:160px;opacity:1;margin-left:8px}
+.nav__links a:not(.active)::after{content:attr(data-tip);position:absolute;left:50%;top:calc(100% + 10px);transform:translate(-50%,-4px);padding:6px 10px;border-radius:var(--radius-sm);
+  font-size:13px;font-weight:500;white-space:nowrap;color:var(--text);background:var(--glass-strong);box-shadow:0 0 0 1px var(--glass-ring), var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s, transform .2s var(--ease)}
+.nav__links a:not(.active):hover::after,.nav__links a:not(.active):focus-visible::after{opacity:1;transform:translate(-50%,0)}
+.nav__links a.nav__home{padding:0 4px;background:none}
+.avatar-logo{display:block;width:36px;height:36px;border-radius:50%;
+  background:url(assets/character.png) 47% 13%/300% auto no-repeat, #f0f0f0;box-shadow:0 0 0 1px var(--glass-ring);transition:transform .25s var(--ease)}
+.nav__home:hover .avatar-logo{transform:scale(1.06)}
+.nav__cta{display:inline-flex;align-items:center;gap:6px;height:44px;margin-left:6px;padding:0 16px;border-radius:999px;font-size:15px;font-weight:500;white-space:nowrap;color:#fff;
+  background:var(--primary);transition:transform .25s var(--ease), background-color .25s}
+.nav__cta:hover{transform:translateY(-1px);background:#2b2b2b}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:center;padding:128px 0 72px}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;font:400 14px/1.4 var(--sub);color:var(--muted);margin-bottom:28px}
+.crumbs a{display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.crumbs a:hover{color:var(--primary)}
+.crumbs li:not(:last-child)::after{content:"/";margin-left:8px;opacity:.4}
+.crumbs [aria-current]{color:var(--text)}
+.hero h1{margin-top:0;font:300 clamp(42px,5.6vw,72px)/1.04 var(--heading);letter-spacing:-.015em;text-wrap:balance}
+.lead{margin-top:24px;max-width:600px;font-size:19px;line-height:1.7;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:20px 48px;margin-top:40px}
+.meta dt{font:400 12px/1 var(--sub);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.meta dd{font:400 18px/1.3 var(--sans);color:var(--text)}
+/* browser mockup on the right */
+.browser{border-radius:var(--radius);overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--line), 0 30px 60px -36px rgba(0,0,0,.25);transform:rotate(1.5deg)}
+.browser__bar{display:flex;align-items:center;gap:6px;height:38px;padding:0 14px;background:#f6f6f6;border-bottom:1px solid var(--line)}
+.browser__bar i{width:9px;height:9px;border-radius:50%;background:#d5dbe7}
+.browser__bar span{margin-left:12px;padding:3px 12px;border-radius:999px;background:#fff;font-size:12px;color:var(--muted)}
+.browser .ph{border-radius:0;box-shadow:none;aspect-ratio:4/5}
+
+/* ---------- body ---------- */
+.case{display:grid;grid-template-columns:200px minmax(0,1fr);gap:72px;padding:24px 0 40px;border-top:1px solid var(--line)}
+.toc{position:sticky;top:110px;align-self:start;padding-top:72px}
+.toc p{font:400 12px/1 var(--sub);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.toc ol{list-style:none;border-left:1px solid var(--line)}
+.toc a{display:block;padding:8px 0 8px 20px;margin-left:-1px;border-left:2px solid transparent;font-size:15px;color:var(--muted);transition:color .2s, border-color .2s}
+.toc a:hover{color:var(--text)}
+.toc a.active{color:var(--text);border-left-color:var(--primary);font-weight:400}
+.content{min-width:0;max-width:800px}
+.sec{padding-top:72px}
+.kicker{font:400 14px/1 var(--sub);letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:16px}
+.sec h2{font:300 clamp(32px,4vw,48px)/1.1 var(--heading);letter-spacing:-.01em;text-wrap:balance}
+.sec > p,.para{margin-top:20px;color:var(--muted)}
+.sec p strong,.para strong{color:var(--text)}
+.quote{margin:36px 0 8px;padding:28px 32px;border-left:2px solid var(--primary);border-radius:0 var(--radius) var(--radius) 0;background:#f7f7f7;font:300 clamp(24px,2.6vw,30px)/1.35 var(--heading);color:var(--text)}
+.quote small{display:block;margin-top:10px;font:400 13px/1 var(--sub);letter-spacing:.12em;text-transform:uppercase;font-style:normal;color:var(--muted)}
+.h3{font:400 22px/1.3 var(--sub);color:var(--text)}
+
+/* numbered items (big serif numerals) */
+.steps{list-style:none;display:grid;gap:36px;margin-top:40px}
+.step{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px}
+.step__n{font:300 44px/1 var(--heading);color:var(--primary)}
+.step p{margin-top:8px;color:var(--muted)}
+.steps--sm{gap:24px}
+.steps--sm .step{grid-template-columns:56px minmax(0,1fr)}
+.steps--sm .step__n{font-size:34px}
+
+/* Notion-like toggles */
+.toggle{margin-top:14px;border-top:1px solid var(--line)}
+.toggle + .toggle{margin-top:0}
+.toggle summary{display:flex;align-items:center;gap:10px;padding:12px 0;cursor:pointer;list-style:none;font:400 16px/1.3 var(--sub);color:var(--text)}
+.toggle summary::-webkit-details-marker{display:none}
+.toggle summary::before{content:"";width:0;height:0;border-left:6px solid currentColor;border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;transition:transform .25s var(--ease);opacity:.6}
+.toggle[open] summary::before{transform:rotate(90deg)}
+.toggle summary:hover{color:var(--primary)}
+.toggle ul{list-style:none;display:grid;gap:8px;padding:0 0 16px 18px}
+.toggle li{position:relative;padding-left:18px;color:var(--muted)}
+.toggle li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:#cfcfcf}
+.toggle.fix li::before{background:var(--primary)}
+.toggle li b{color:var(--text)}
+
+/* two-column text (no cards) */
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:36px;border-top:1px solid var(--line)}
+.cols > div{padding:28px 32px 4px 0}
+.cols > div + div{padding-left:32px;border-left:1px solid var(--line)}
+.dots{list-style:none;display:grid;gap:8px;margin-top:14px}
+.dots li{position:relative;padding-left:18px;color:var(--muted)}
+.dots li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--primary)}
+.small-label{margin-top:16px;font:400 13px/1.5 var(--sub);color:var(--muted)}
+.small-label b{color:var(--text);font-weight:400}
+
+/* demographics table */
+.rows{margin-top:36px;border-top:1px solid var(--line)}
+.rows div{display:grid;grid-template-columns:160px minmax(0,1fr);gap:24px;padding:16px 0;border-bottom:1px solid var(--line)}
+.rows dt{font:400 15px/1.6 var(--sub);color:var(--text)}
+.rows dd{color:var(--muted)}
+.sub-h{margin-top:56px}
+
+/* design pages */
+.page{margin-top:64px}
+.page__head{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}
+.page__head .h3{padding-top:2px}
+.page__head p{color:var(--muted)}
+.page__head p strong{color:var(--text)}
+.goal-line{display:flex;gap:10px;margin-top:12px;font-size:15px;color:var(--text)}
+.goal-line::before{content:"→";color:var(--primary)}
+.shots{display:grid;gap:14px;margin-top:24px}
+.shots .full{aspect-ratio:16/9}
+.shots .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.shots .pair .ph{aspect-ratio:4/3}
+.mock{margin-top:36px;aspect-ratio:16/9}
+
+/* outcomes */
+.checks{list-style:none;display:grid;gap:14px;margin-top:28px}
+.checks li{display:flex;gap:14px;align-items:flex-start;font:400 19px/1.5 var(--sub);color:var(--text)}
+.checks svg{width:24px;height:24px;flex:none;margin-top:2px;color:var(--primary)}
+
+/* end */
+.end{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;margin-top:96px;padding:40px 0;border-top:1px solid var(--line)}
+.end h2{font:300 clamp(28px,3vw,36px)/1.15 var(--heading)}
+.end .actions{display:flex;flex-wrap:wrap;gap:12px}
+.footer{margin-top:48px;padding:28px 0 48px;font-size:14px;background:#111111;color:#a3a3a3}
+
+@media (max-width:1100px){
+  .case{grid-template-columns:1fr;gap:0}
+  .toc{display:none}
+  .content{max-width:none}
+}
+@media (max-width:900px){
+  html{scroll-padding-top:24px}
+  .nav{top:auto;bottom:calc(14px + env(safe-area-inset-bottom, 0px));max-width:calc(100% - 20px)}
+  .nav__links{gap:0}
+  .nav__links a{height:46px;padding:0 8px;font-size:12px}
+  .nav__links a.active .nav__label{max-width:104px;margin-left:6px}
+  .nav__links a:not(.active)::after{top:auto;bottom:calc(100% + 10px)}
+  .avatar-logo{width:34px;height:34px}
+  .nav__cta{width:40px;height:40px;padding:0;justify-content:center;margin-left:2px}
+  .nav__cta-text{display:none}
+  .hero{grid-template-columns:1fr;gap:48px;padding-top:56px}
+  .browser{max-width:420px;transform:none}
+  .browser .ph{aspect-ratio:4/3}
+  .page__head{grid-template-columns:1fr;gap:8px}
+  .footer{padding-bottom:120px}
+}
+@media (max-width:640px){
+  :root{--gutter:16px}
+  body{font-size:16px}
+  .lead{font-size:17px}
+  .meta{gap:20px 32px}
+  .cols{grid-template-columns:1fr}
+  .cols > div{padding:24px 0 4px}
+  .cols > div + div{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .rows div{grid-template-columns:1fr;gap:4px}
+  .step{grid-template-columns:52px minmax(0,1fr)}
+  .step__n{font-size:34px}
+  .shots .pair{grid-template-columns:1fr}
+  .btn{height:48px;padding:0 20px;font-size:15px}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition-duration:.01ms !important}
+  .reveal{opacity:1;transform:none}
+}
+/* Furrr Fun additions */
+.cover-shot{border-radius:var(--radius);overflow:hidden;transform:rotate(-1.5deg);box-shadow:0 0 0 1px var(--line), 0 30px 60px -36px rgba(0,0,0,.25)}
+.cover-shot .ph{border-radius:0;box-shadow:none;aspect-ratio:4/5}
+.toggle-body{padding:0 0 22px 18px}
+.toggle-body > p{color:var(--muted)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+.grid3 .ph{aspect-ratio:1/1}
+.shots .wide{aspect-ratio:16/9}
+.shots .tall{aspect-ratio:4/3}
+@media (max-width:900px){.cover-shot{max-width:420px;transform:none}.cover-shot .ph{aspect-ratio:4/3}}
+@media (max-width:640px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* real images */
+.shot{border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 1px var(--line);background:#f6f6f6}
+.shot img{display:block;width:100%;height:100%;object-fit:cover}
+.scrollshot-wrap{position:relative}
+.scrollshot{height:min(72vh,640px);overflow-y:auto;border-radius:var(--radius);box-shadow:0 0 0 1px var(--line);overscroll-behavior:contain;scrollbar-width:thin;background:#f6f6f6}
+.scrollshot img{display:block;width:100%;height:auto}
+.scrollshot-wrap::after{content:"Scroll ↓";position:absolute;right:12px;bottom:12px;padding:6px 10px;border-radius:999px;background:#111;color:#fff;font:400 12px/1 var(--sub);pointer-events:none}
+.banner{margin:0 0 8px;border-radius:var(--radius);overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+.banner img{display:block;width:100%;aspect-ratio:5/2;object-fit:cover}
+.cover-shot img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.logo-grid{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+.logo-grid .stack{display:grid;gap:14px}
+.logo-grid .stack .shot{aspect-ratio:1/1}
+.logo-grid .stack .shot img{object-fit:contain;padding:12%}
+.grid3 .shot{aspect-ratio:4/5}
+.grid3.r32 .shot{aspect-ratio:3/2}
+.pack{display:grid;grid-template-columns:.8fr 1.5fr;gap:14px;align-items:start}
+.single{max-width:520px}
+@media (max-width:640px){.logo-grid,.pack{grid-template-columns:1fr}.logo-grid .stack{grid-template-columns:repeat(3,1fr)}}
+/* generic case content */
+.sec p{color:var(--muted)}
+.sec p + p,.sec .dots + p,.sec .nums + p{margin-top:14px}
+.sec h4{margin-top:28px;font:400 18px/1.35 var(--sub);color:var(--text)}
+.sec .sub-h + p{margin-top:10px}
+.sec .dots,.sec .nums{margin-top:14px}
+.nums{padding-left:22px;display:grid;gap:8px;color:var(--muted)}
+.nums li::marker{color:var(--text);font-weight:400}
+.dots .dots{margin-top:8px}
+.callout-box{margin-top:20px;padding:20px 22px;border-radius:var(--radius);background:#f7f7f7;color:var(--text)}
+.callout-box p{color:var(--text)}
+.pic{margin:20px 0 0}
+.pic img{width:100%;height:auto;border-radius:var(--radius);box-shadow:0 0 0 1px var(--line)}
+.pic .scrollshot img{border-radius:0;box-shadow:none}
+.pic figcaption{margin-top:8px;font-size:13px;color:var(--muted)}
+.cols-auto{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:16px;margin-top:8px;align-items:start}
+.cols-auto > div > :first-child{margin-top:12px}
+.video-link{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid #d6d6d6;color:var(--text);font:400 15px/1 var(--sub)}
+.video-link:hover{border-color:#111}
+.table-wrap{overflow-x:auto;margin-top:16px}
+.table-wrap table{border-collapse:collapse;width:100%;font-size:15px}
+.table-wrap td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+.table-wrap tr:first-child td{color:var(--text);font-family:var(--sub)}
+code{font-size:.9em;background:#f2f2f2;padding:1px 5px;border-radius:5px}
+@media (max-width:640px){.cols-auto{grid-template-columns:repeat(min(var(--n),2),minmax(0,1fr))}}
+
+/* ---------- Top nav: name + pill + Say Hello; pulls together on scroll ---------- */
+.topnav{position:fixed;top:16px;left:0;right:0;z-index:100;pointer-events:none}
+.topnav__in{pointer-events:auto;margin:0 auto;width:calc(100% - 48px);max-width:1180px;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:max-width .7s cubic-bezier(.2,.7,.2,1)}
+.topnav.compact .topnav__in{max-width:var(--cw,640px)}
+.brand{flex:none;display:inline-flex;align-items:center;height:52px;border-radius:999px;color:#111;font:400 19px/1 var(--sub);white-space:nowrap;transition:background-color .4s, box-shadow .4s}
+.brand__mark{display:grid;place-items:center;width:52px;height:52px;margin-right:-6px;font-size:18px;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.brand__mark img{width:40px;height:40px;object-fit:contain;mix-blend-mode:multiply}  /* memoji has a white ground */
+.brand:hover .brand__mark{transform:rotate(-8deg) scale(1.08)}
+@media (hover:hover){
+  /* hover: the name tucks away and only the memoji stays, like the compact state */
+  .brand:hover{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+  .brand:hover .brand__mark{margin-right:0}
+  .brand:hover .brand__name{max-width:0;opacity:0;padding-right:0}
+}
+.brand__name{display:block;max-width:220px;overflow:hidden;opacity:1;padding-right:10px;transition:max-width .6s cubic-bezier(.2,.7,.2,1), opacity .3s, padding .6s}
+.topnav.compact .brand{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+.topnav.compact .brand__mark{margin-right:0}
+.topnav.compact .brand__name{max-width:0;opacity:0;padding-right:0}
+.pill ul{display:flex;gap:2px;list-style:none;margin:0;padding:5px;border-radius:999px;background:#f3f3f3;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -18px rgba(0,0,0,.3)}
+.pill a{display:flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:999px;font:400 15px/1 var(--sub);color:#6b6b6b;white-space:nowrap;transition:color .2s, background-color .2s, box-shadow .2s}
+.pill a:hover{color:#111}
+.pill a.active{background:#fff;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.pill svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pill a.active svg{fill:currentColor;fill-opacity:.12}
+.sayhi{flex:none;display:inline-flex;align-items:center;height:52px;padding:0 22px 0 16px;border-radius:999px;background:#111;color:#fff;font:400 16px/1 var(--sub);white-space:nowrap;transition:padding .6s cubic-bezier(.2,.7,.2,1), background-color .2s}
+.sayhi:hover{background:#2b2b2b}
+.sayhi__hand{display:inline-block;font-size:20px;line-height:1;transform-origin:70% 80%;animation:handwave 2.2s ease-in-out infinite}
+.sayhi__text{display:block;max-width:110px;margin-left:8px;overflow:hidden;opacity:1;transition:max-width .6s cubic-bezier(.2,.7,.2,1), opacity .3s, margin .6s}
+.topnav.compact .sayhi{padding:0 15px}
+.topnav.compact .sayhi__text{max-width:0;opacity:0;margin-left:0}
+@keyframes handwave{0%,55%,100%{transform:rotate(0)}10%{transform:rotate(16deg)}20%{transform:rotate(-8deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-4deg)}48%{transform:rotate(8deg)}}
+@media (max-width:900px){
+  .topnav{top:auto;bottom:calc(14px + env(safe-area-inset-bottom, 0px))}
+  .topnav__in{width:calc(100% - 20px);max-width:var(--cw,360px) !important;justify-content:center}
+  .brand{background:#fff;box-shadow:0 0 0 1px #ebebeb, 0 10px 24px -16px rgba(0,0,0,.35)}
+  .brand__mark{margin-right:0}
+  .brand__name,.sayhi__text{max-width:0;opacity:0;margin-left:0;padding-right:0}
+  .sayhi{padding:0 15px}
+  .pill a{padding:0 11px;font-size:13px}
+  .pill a span{display:none}
+  .pill a.active span{display:inline}
+}
+@media (prefers-reduced-motion: reduce){.sayhi__hand{animation:none}}
+</style>
+<link rel="stylesheet" href="assets/motion.css">
+</head>
+<body>
+
+<!-- ================= FLOATING NAV ================= -->
+<header class="topnav" id="nav">
+  <div class="topnav__in">
+    <a class="brand" href="index.html" aria-label="Fachryall, home"><span class="brand__mark" aria-hidden="true"><img src="assets/memoji.png" width="256" height="256" alt=""></span><span class="brand__name">Fachryall</span></a>
+    <nav class="pill" aria-label="Main"><ul><li><a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Come In</span></a></li><li><a href="meet-me.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5v.01M15 9.5v.01"/></svg><span>Meet Me</span></a></li><li><a href="work.html" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span>My Lab</span></a></li></ul></nav>
+    <a class="sayhi" href="https://www.linkedin.com/in/fachriallkhijaro/" target="_blank" rel="noopener" aria-label="Say hello on LinkedIn"><span class="sayhi__hand" aria-hidden="true">👋</span><span class="sayhi__text">Say Hello</span></a>
+  </div>
+</header>
+
+<main class="wrap">
+
+<header class="hero" style="grid-template-columns:1fr">
+  <div>
+    <nav aria-label="Breadcrumb">
+      <ol class="crumbs">
+        <li><a href="work.html">My Lab</a></li>
+        <li><a href="work.html#uiux">UI/UX Design</a></li>
+        <li><span aria-current="page">Poci (Product Ocistok)</span></li>
+      </ol>
+    </nav>
+    <h1>Poci (Product Ocistok)</h1>
+    <p class="lead">The Poci platform is already in the development stage, so it has not yet reached the launch stage</p>
+    <dl class="meta">
+      <div><dt>Type</dt><dd>Project</dd></div>
+      <div><dt>Role</dt><dd>UI/UX · Product Design</dd></div>
+      <div><dt>Industry</dt><dd>Retail</dd></div>
+      <div><dt>Year</dt><dd>2024</dd></div>
+      <div><dt>Tools</dt><dd>Figma · Illustrator</dd></div>
+    </dl>
+  </div>
+</header>
+
+<figure class="banner reveal"><img src="assets/work/poci/cover.jpg" width="1400" height="560" alt="Poci (Product Ocistok) cover"></figure>
+
+<div class="case">
+  <aside class="toc" aria-label="On this page">
+    <p>On this page</p>
+    <ol id="toc"><li><a href="#s1">Project Overview</a></li><li><a href="#s2">Objective</a></li><li><a href="#s3">Requirements</a></li><li><a href="#s4">Design - High Fidelity UI</a></li><li><a href="#s5">Reflection</a></li></ol>
+  </aside>
+
+  <article class="content">
+    <section class="sec reveal" id="s1">
+      <p class="kicker">01</p>
+      <h2>Project Overview</h2>
+      <div class="callout-box"><p>The Poci platform is already in the development stage, so it has not yet reached the launch stage</p></div><figure class="pic"><img src="assets/work/poci/01.jpg" width="1400" height="995" alt="Poci (Product Ocistok)" loading="lazy" decoding="async"></figure><p><strong>Poci (Product Ocistok) is a new platform designed for users who want to sell directly through Ocistok, where the main feature of this product is managing an online store using electronic devices such as laptops or computers. Previously, Ocistok sold goods that were directly connected to marketplaces from China such as Alibaba, Taobao, and 1688.</strong></p>
+    </section>
+    <section class="sec reveal" id="s2">
+      <p class="kicker">02</p>
+      <h2>Objective</h2>
+      <div class="cols-auto" style="--n:2"><div><figure class="pic"><img src="assets/work/poci/02.jpg" width="1400" height="995" alt="Poci (Product Ocistok)" loading="lazy" decoding="async"></figure></div><div><figure class="pic"><img src="assets/work/poci/03.jpg" width="1400" height="995" alt="Poci (Product Ocistok)" loading="lazy" decoding="async"></figure></div></div><p><strong>The Poci platform aims to obtain a database of sellers and products. It also provides space to sell products at more competitive prices compared to other e-commerce platforms.</strong></p><h4>Adventages</h4><p>Poci has been provided with features similar to an ERP (Enterprise Resource Planning) system to assist sellers in managing various aspect of their business, such as product management.</p><h4>Users</h4><p>There are 2 user accounts for the Poci platform, namely seller and purchasing team. Both accounts will be injected by the Poci team.</p><ul class="dots"><li>Seller: An account for managing stores/products to be sold or made live on the Poci platform.</li><li>Purchasing Team: Aims to curate products sold by sellers for the Poci platform. There will be an approval process at the product submission stage from the seller until it is allowed to go live on the platform.</li></ul>
+    </section>
+    <section class="sec reveal" id="s3">
+      <p class="kicker">03</p>
+      <h2>Requirements</h2>
+      <h3 class="h3 sub-h">Features</h3><p>The main features of Poci have been provided as follows:</p><ul class="dots"><li>Performance, for analyzing products/sales.</li><li>My Merchant, for managing stores.</li><li>My Product, for managing products.</li></ul><figure class="pic"><div class="scrollshot-wrap"><div class="scrollshot" tabindex="0" role="region" aria-label="Full page, scroll to see all"><img src="assets/work/poci/04.png" width="1400" height="3144" alt="Poci (Product Ocistok)" loading="lazy" decoding="async"></div></div></figure><h4>Understanding Business Goals</h4><p>Pocis business goals have been understood as follows:</p><ul class="dots"><li>Users are given the opportunity to open stores directly through Ocistok, facilitating the selling process.</li><li>Users are allowed to determine prducts or sales strategies by analyzing performance.</li></ul><h4>Target User</h4><ul class="dots"><li>Age range<ul class="dots"><li>20 - 40 years old.</li></ul></li><li>Gender<ul class="dots"><li>Man,</li><li>Woman.</li></ul></li><li>Characteristic<ul class="dots"><li>Enterpreneurs,</li><li>Traders,</li><li>Up-to-date with product trends.</li></ul></li><li>Persona<ul class="dots"><li>Enterpreneurs or traders who want to expand their online sales in other countries.</li><li>Traders who wish to manage their store while simultaneously analyzing the market through a single platform.</li></ul></li></ul><h4>Delivarbles</h4><p>Expected results have been provided:</p><ul class="dots"><li>User Journey and User Flow Study.</li><li>Figma Hi-Fi UI.</li></ul>
+    </section>
+    <section class="sec reveal" id="s4">
+      <p class="kicker">04</p>
+      <h2>Design - High Fidelity UI</h2>
+      <div class="callout-box"><p>At this phase, the design has entered the production stage and is currently uner review</p></div><h4>Sign-Up Pages</h4><p>As previously mentioned, Poci accounts can only be injected by Ocistok internal team, so there are no features for creating a new account or forgetting a password.</p><figure class="pic"><img src="assets/work/poci/05.png" width="1400" height="995" alt="Sign Up (Default)" loading="lazy" decoding="async"><figcaption>Sign Up (Default)</figcaption></figure><div class="cols-auto" style="--n:2"><div><figure class="pic"><img src="assets/work/poci/06.png" width="1400" height="995" alt="Sign Up (Filling)" loading="lazy" decoding="async"><figcaption>Sign Up (Filling)</figcaption></figure></div><div><figure class="pic"><img src="assets/work/poci/07.png" width="1400" height="995" alt="Sign Up (Error Message)" loading="lazy" decoding="async"><figcaption>Sign Up (Error Message)</figcaption></figure></div></div><h4>Performance</h4><p>The Poci dashboard where sellers are enabled to perform analysis for their store or products.</p><figure class="pic"><img src="assets/work/poci/08.png" width="1400" height="2999" alt="Perfomance Pages" loading="lazy" decoding="async"><figcaption>Perfomance Pages</figcaption></figure><h4>My Merchant Pages</h4><p>This page is provided as a detailed section for managing store that will go live on Ocistok. Sellers are allowed to manage data, categories photo, and store banners.</p><figure class="pic"><img src="assets/work/poci/09.png" width="1400" height="522" alt="Merchant List Pages" loading="lazy" decoding="async"><figcaption>Merchant List Pages</figcaption></figure><figure class="pic"><img src="assets/work/poci/10.png" width="1400" height="413" alt="Input Merchant Information Pages" loading="lazy" decoding="async"><figcaption>Input Merchant Information Pages</figcaption></figure><figure class="pic"><img src="assets/work/poci/11.png" width="1400" height="665" alt="Input Merchant Information Pages" loading="lazy" decoding="async"><figcaption>Input Merchant Information Pages</figcaption></figure><h4>My Products</h4><p>A Feature has been provided where sellers are allowed to manage products submitted for sale and those already sold on the Ocistok platform.</p><figure class="pic"><img src="assets/work/poci/12.png" width="1400" height="2402" alt="My Product Pages" loading="lazy" decoding="async"><figcaption>My Product Pages</figcaption></figure><figure class="pic"><img src="assets/work/poci/13.png" width="1400" height="902" alt="Add New Product Pages" loading="lazy" decoding="async"><figcaption>Add New Product Pages</figcaption></figure><h4>Synchronization</h4><p>This feature on the Poci platform has been integrated with Ocistok Order Managemenet System (OMS), allowing orders to be processed directly. Improvements in the OMS have been made to the “All Customer Request” and “All Order” menus, as well as the modal details for each Order ID</p><figure class="pic"><img src="assets/work/poci/14.png" width="1400" height="969" alt="Left Menu: All Customer Request, and Right Menu: All Order" loading="lazy" decoding="async"><figcaption>Left Menu: All Customer Request, and Right Menu: All Order</figcaption></figure><figure class="pic"><img src="assets/work/poci/15.png" width="1400" height="756" alt="Modal Detail Order (Collapse &amp; Expand)" loading="lazy" decoding="async"><figcaption>Modal Detail Order (Collapse &amp; Expand)</figcaption></figure>
+    </section>
+    <section class="sec reveal" id="s5">
+      <p class="kicker">05</p>
+      <h2>Reflection</h2>
+      <h4>What I must do going forward</h4><p>While designing the Poci platform, I have discussed extensively with the PM and noticed that Poci holds significant potentional. With its integration into Ocistok, which has the potentional to become its own e-commerce platform, offering competitively priced goods due to the unique selling point of sourcing products directly from manufactures or first-hand suppliers, this form a USP for Ocistok. This will undoubtedly impact Poci, andd if this scenario unfolds, many feature improvements will be needed in the future. In the near future, things that need to be condsidered may include:</p><ul class="dots"><li>Conducting extetnsive research and identifying pain points.</li><li>Testing user performance to obtain valid data.</li></ul>
+    </section>
+
+    <div class="end reveal">
+      <h2>More things I’ve made.</h2>
+      <div class="actions">
+        <a class="btn btn--line" href="work.html"><svg class="i i--duo cta-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>All work</a>
+        <a class="btn btn--dark" href="https://www.linkedin.com/in/fachriallkhijaro/" target="_blank" rel="noopener">Say Hi 💬</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>©<span id="yr">2026</span> Fachri All Khijaro · All works are not to be used without written permission.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll reveal */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* "On this page": highlight the section being read */
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function spy() {
+    var mid = innerHeight * 0.35, hit = 0;
+    targets.forEach(function (t, i) { if (t.getBoundingClientRect().top <= mid) hit = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === hit); });
+  }
+  addEventListener('scroll', spy, { passive: true });
+  spy();
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+})();
+</script>
+<script>
+/* top nav: logo + Say Hello slide in next to the pill once you scroll */
+(function () {
+  var n = document.getElementById('nav'); if (!n || !n.classList.contains('topnav')) return;
+  var pill = n.querySelector('.pill ul');
+  function fit() { n.style.setProperty('--cw', (pill.offsetWidth + 2 * 52 + 16) + 'px'); }
+  function on() { n.classList.toggle('compact', scrollY > 40); }
+  fit(); on();
+  addEventListener('scroll', on, { passive: true });
+  addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="assets/motion.js"></script>
+</body>
+</html>
