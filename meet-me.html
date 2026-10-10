@@ -275,6 +275,10 @@ main{overflow-x:clip}
 .connect div{display:flex;gap:10px}
 .connect a{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid #dcdcdc;transition:border-color .2s, background-color .2s, color .2s}
 .connect a:hover{background:#111;border-color:#111;color:#fff}
+/* CV icon: a small "CV" label rises above the icon on hover */
+.connect a.connect__cv{position:relative}
+.connect a.connect__cv::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);padding:5px 9px;border-radius:6px;background:#111;color:#fff;font:500 12px/1 var(--sub);letter-spacing:.04em;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,4px);transition:opacity .3s var(--ease), transform .3s var(--ease)}
+.connect a.connect__cv:hover::after,.connect a.connect__cv:focus-visible::after{opacity:1;transform:translate(-50%,0)}
 .portrait{position:relative;border-radius:var(--radius);overflow:hidden;background:#f2f2f2;aspect-ratio:4/5;transform:rotate(2deg);box-shadow:0 0 0 1px var(--line), 0 30px 60px -36px rgba(0,0,0,.25)}
 .portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:scale .8s var(--ease)}
 .portrait:hover img{scale:1.04}
@@ -375,6 +379,7 @@ main{overflow-x:clip}
       <a href="mailto:fachryall.works@gmail.com" aria-label="Email"><svg class="i i--duo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></a>
       <a href="https://www.linkedin.com/in/fachriallkhijaro/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="i i--duo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 10.5V16M8 7.6v.01M12 16v-5.5M12 13a2.5 2.5 0 0 1 5 0v3"/></svg></a>
       <a href="https://www.instagram.com/fachryall/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="i i--duo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.3 6.7v.01"/></svg></a>
+      <a class="connect__cv" href="assets/Fachri-All-Khijaro-CV.pdf?v=2026-10-10" data-cv download="Fachri All Khijaro CV.pdf" target="_blank" rel="noopener" aria-label="Download CV" data-tip="CV"><svg class="i i--duo" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3h7L19 8.5v10a2.5 2.5 0 0 1-2.5 2.5h-10A2.5 2.5 0 0 1 4 18.5v-13A2.5 2.5 0 0 1 6.5 3z"/><path d="M13.5 3v5.5H19M12 11.5v6M9.5 15l2.5 2.5 2.5-2.5"/></svg></a>
     </div></div>
   </div>
   <figure class="portrait"><img src="assets/portrait-meet.jpg" width="700" height="920" alt="Portrait of Fachri All Khijaro"><figcaption>Fachri All Khijaro · Multidisciplinary Designer</figcaption></figure>
@@ -555,6 +560,23 @@ main{overflow-x:clip}
   addEventListener('scroll', on, { passive: true });
   addEventListener('resize', fit);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+<script>
+/* CV download: a plain link works on the normal site; inside the Claude artifact viewer
+   plain downloads are blocked, so hand the PDF over through the viewer's save dialog. */
+(function () {
+  if (!window.claude || !window.claude.use) return;
+  var dl = null;
+  window.claude.use('downloads').then(function (d) { dl = d; });
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-cv]');
+    if (!a || !dl) return;
+    e.preventDefault();
+    fetch(a.getAttribute('href')).then(function (r) { return r.blob(); })
+      .then(function (b) { return dl.save({ filename: 'Fachri All Khijaro CV.pdf', data: b }); })
+      .catch(function () {});
+  });
 })();
 </script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
